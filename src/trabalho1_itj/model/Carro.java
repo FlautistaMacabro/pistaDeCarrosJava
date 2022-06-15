@@ -13,12 +13,16 @@ import java.util.Random;
 public class Carro {
   private int id_carro;
   private String nome;
+  private int kilometrosRodados;
+  private int voltasPercorridas;
   private boolean comCombustivel;
   private boolean emFuncionamento;
 
   public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
     setId_carro(id_carro);
     setNome(nome);
+    setKilometrosRodados(0);
+    setKilometrosRodados(0);
     setComCombustivel(comCombustivel);
     setEmFuncionamento(emFuncionamento);
   }
@@ -26,6 +30,8 @@ public class Carro {
   public Carro(int id_carro, String nome, boolean comCombustivel) {
     setId_carro(id_carro);
     setNome(nome);
+    setKilometrosRodados(0);
+    setVoltasPercorridas(0);
     setComCombustivel(comCombustivel);
     setEmFuncionamento(true);
   }
@@ -33,6 +39,8 @@ public class Carro {
   public Carro(String nome, int id_carro, boolean emFuncionamento) {
     setId_carro(id_carro);
     setNome(nome);
+    setKilometrosRodados(0);
+    setVoltasPercorridas(0);
     setComCombustivel(true);
     setEmFuncionamento(emFuncionamento);
   }
@@ -40,6 +48,8 @@ public class Carro {
   public Carro(int id_carro, String nome) {
     setId_carro(id_carro);
     setNome(nome);
+    setKilometrosRodados(0);
+    setVoltasPercorridas(0);
     setComCombustivel(true);
     setEmFuncionamento(true);
   }
@@ -60,6 +70,22 @@ public class Carro {
     this.nome = nome;
   }
 
+  public int getKilometrosRodados() {
+    return kilometrosRodados;
+  }
+
+  private void setKilometrosRodados(int kilometrosRodados) {
+    this.kilometrosRodados = kilometrosRodados;
+  }
+
+  public int getVoltasPercorridas() {
+    return voltasPercorridas;
+  }
+
+  private void setVoltasPercorridas(int voltasPercorridas) {
+    this.voltasPercorridas = voltasPercorridas;
+  }
+
   public final boolean isComCombustivel() {
     return comCombustivel;
   }
@@ -76,6 +102,18 @@ public class Carro {
     this.emFuncionamento = emFuncionamento;
   }
   
+  public void somarKilometrosRodados(int kilometrosExtras){
+    setKilometrosRodados(getKilometrosRodados()+kilometrosExtras);
+  }
+  
+  public void subtrairKilometrosDaVolta(int kilometrosDaVolta) {
+    setKilometrosRodados(getKilometrosRodados()-kilometrosDaVolta);
+  }
+  
+  public void somarUmaVolta(){
+    setVoltasPercorridas(getVoltasPercorridas()+1);
+  }
+  
   public boolean calcularProbabilidadeQuebra(float porcentagem){
     setEmFuncionamento(calcularProbabilidade(porcentagem));
     return isEmFuncionamento();
@@ -86,7 +124,7 @@ public class Carro {
     return isComCombustivel();
   }
   
-  public boolean calcularProbabilidade(float porcentagem){
+  private boolean calcularProbabilidade(float porcentagem){
     Random rand = new Random();
     return rand.nextInt((int) (100/porcentagem))==0;
   }
