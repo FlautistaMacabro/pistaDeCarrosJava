@@ -53,9 +53,11 @@ public class Armazem {
   }
   
   public Integer idPossiveldeCarro() {
+    ArrayList<Integer> listaIds = getIdsPossiveis();
+    if(listaIds.isEmpty())
+      return -1;
     int quant = getQuantCarros();
     Random rand = new Random();
-    ArrayList<Integer> listaIds = getIdsPossiveis();
     Integer index = rand.nextInt(quant);
     while(!listaIds.contains(index))
       index = rand.nextInt(quant);

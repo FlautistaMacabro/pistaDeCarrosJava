@@ -16,7 +16,7 @@ public class Main {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Corrida corrida = new Corrida(10, 3, 5, 20);
+    Corrida corrida = new Corrida(5, 11, 5, 20);
     corrida.iniciarCorrida();
   }
   

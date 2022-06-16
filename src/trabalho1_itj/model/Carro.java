@@ -16,7 +16,7 @@ public class Carro {
   private int kilometrosRodados;
   private int voltasPercorridas;
   private boolean comCombustivel;
-  private boolean emFuncionamento;
+//  private boolean emFuncionamento;
 
   public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
     setId_carro(id_carro);
@@ -24,7 +24,7 @@ public class Carro {
     setKilometrosRodados(0);
     setKilometrosRodados(0);
     setComCombustivel(comCombustivel);
-    setEmFuncionamento(emFuncionamento);
+//    setEmFuncionamento(emFuncionamento);
   }
   
   public Carro(int id_carro, String nome, boolean comCombustivel) {
@@ -33,7 +33,7 @@ public class Carro {
     setKilometrosRodados(0);
     setVoltasPercorridas(0);
     setComCombustivel(comCombustivel);
-    setEmFuncionamento(true);
+//    setEmFuncionamento(true);
   }
   
   public Carro(String nome, int id_carro, boolean emFuncionamento) {
@@ -42,7 +42,7 @@ public class Carro {
     setKilometrosRodados(0);
     setVoltasPercorridas(0);
     setComCombustivel(true);
-    setEmFuncionamento(emFuncionamento);
+//    setEmFuncionamento(emFuncionamento);
   }
   
   public Carro(int id_carro, String nome) {
@@ -51,14 +51,14 @@ public class Carro {
     setKilometrosRodados(0);
     setVoltasPercorridas(0);
     setComCombustivel(true);
-    setEmFuncionamento(true);
+//    setEmFuncionamento(true);
   }
 
   public int getId_carro() {
     return id_carro;
   }
 
-  public final void setId_carro(int id_carro) {
+  private final void setId_carro(int id_carro) {
     this.id_carro = id_carro;
   }
 
@@ -66,7 +66,7 @@ public class Carro {
     return nome;
   }
 
-  public final void setNome(String nome) {
+  private final void setNome(String nome) {
     this.nome = nome;
   }
 
@@ -94,13 +94,13 @@ public class Carro {
     this.comCombustivel = comCombustivel;
   }
 
-  public final boolean isEmFuncionamento() {
-    return emFuncionamento;
-  }
-
-  public final void setEmFuncionamento(boolean emFuncionamento) {
-    this.emFuncionamento = emFuncionamento;
-  }
+//  public final boolean isEmFuncionamento() {
+//    return emFuncionamento;
+//  }
+//
+//  public final void setEmFuncionamento(boolean emFuncionamento) {
+//    this.emFuncionamento = emFuncionamento;
+//  }
   
   public void somarKilometrosRodados(int kilometrosExtras){
     setKilometrosRodados(getKilometrosRodados()+kilometrosExtras);
@@ -115,8 +115,7 @@ public class Carro {
   }
   
   public boolean calcularProbabilidadeQuebra(float porcentagem){
-    setEmFuncionamento(calcularProbabilidade(porcentagem));
-    return isEmFuncionamento();
+    return calcularProbabilidade(porcentagem);
   }
   
   public boolean calcularProbabilidadeAbastecimento(float porcentagem){

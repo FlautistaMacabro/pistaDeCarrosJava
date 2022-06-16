@@ -35,65 +35,82 @@ public class Corrida {
   
   public void iniciarCorrida(){
     Carro[] vencedores = {null,null,null};
+    Armazem verificarExistenciaDeCarros = getArmazem();
+    int continuarCorrida = 0;
     for (int i = 0; i < 3; i++)
-      while(vencedores[i] == null)
+      while(vencedores[i] == null){
+        continuarCorrida = verificarExistenciaDeCarros.idPossiveldeCarro();
+        if(continuarCorrida == -1)
+          break;
         vencedores[i] = realizaAcaoDoCarro();
+      }
+    if(continuarCorrida == -1){
+      System.out.println("\n\t\t NAO FOI POSSIVEL TERMINAR A CORRIDA !!!\n");
+      return;
+    }
     System.out.println("\n\t\t PODIO \n");
     for (int i = 0; i < 3; i++)
       System.out.println("\tO "+(i+1)+"º colocado foi o: "+vencedores[i].getNome()+" !!!");
   }
   
-  public boolean verificarPassagemDeVoltasEVencedor(){
-    Armazem acessoAosCarros = getArmazem();
-    ArrayList<Carro> listaCarros = acessoAosCarros.getListaDeCarrosClone();
+  public boolean verificarEstadoDoCarro(Carro carroSorteado){
     int tamanhoVolta = getTamanhoPista();
     int quantVoltas = getVoltas();
-    for(var car : listaCarros){
-      if(car.getKilometrosRodados() >= tamanhoVolta){
-        car.subtrairKilometrosDaVolta(tamanhoVolta);
-        car.somarUmaVolta();
-        int voltasPercorridas = car.getVoltasPercorridas();
-        String nomeCarro = car.getNome();
-        System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(quantVoltas-voltasPercorridas)+"\n");
-        
-        if(voltasPercorridas >= quantVoltas){
-          int colocacao = getPosicaoDisputada();
-          setPosicaoDisputada(colocacao+1);
-          acessoAosCarros.removerCarroDaCorrida(car);
-          String fraseColocacao = "";
-          switch(colocacao){
-            case 1 -> fraseColocacao = getFrasePrimeiroLugar();
-            case 2 -> fraseColocacao = getFraseSegundoLugar();
-            case 3 -> fraseColocacao = getFraseTerceiroLugar();
-          }
-          System.out.println("\nO "+nomeCarro+" CRUZOU A LINHA DE CHEGADA! Ficando em "+fraseColocacao+" LUGAR !!!\n\n");
-          return true;
+    if(carroSorteado.getKilometrosRodados() >= tamanhoVolta){
+      int voltasPercorridas = carroSorteado.getVoltasPercorridas();
+      float probQuebr = getProbQuebra();
+      float probAbast = getProbAbastecimento();
+      String nomeCarro = carroSorteado.getNome();
+      carroSorteado.subtrairKilometrosDaVolta(tamanhoVolta);
+      carroSorteado.somarUmaVolta();
+      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(quantVoltas-voltasPercorridas));
+      
+      if(voltasPercorridas >= quantVoltas){
+        Armazem acessoAosCarros = getArmazem();
+        int colocacao = getPosicaoDisputada();
+        setPosicaoDisputada(colocacao+1);
+        acessoAosCarros.removerCarroDaCorrida(carroSorteado);
+        String fraseColocacao = "";
+        switch(colocacao){
+          case 1 -> fraseColocacao = getFrasePrimeiroLugar();
+          case 2 -> fraseColocacao = getFraseSegundoLugar();
+          case 3 -> fraseColocacao = getFraseTerceiroLugar();
         }
+//        Mensagem de vitória imediada
+        System.out.println("\n\nO "+nomeCarro+" CRUZOU A LINHA DE CHEGADA! Ficando em "+fraseColocacao+" LUGAR !!!\n\n");
+        return true;
       }
+      
+      if(carroSorteado.calcularProbabilidadeQuebra(probQuebr)){
+        Armazem acessoAosCarros = getArmazem();
+        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele está FORA DA CORRIDA !!\n");
+        acessoAosCarros.removerCarroDaCorrida(carroSorteado);
+      }
+      else if(carroSorteado.calcularProbabilidadeAbastecimento(probAbast))
+        System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
     return false;
   }
   
   public Carro realizaAcaoDoCarro() {
-    float probQuebr = getProbQuebra();
-    float probAbast = getProbAbastecimento();
     var carroSorteado = escolheCarroParaAcao();
-    String nomeCarro = carroSorteado.getNome();
-    if(carroSorteado.calcularProbabilidadeQuebra(probQuebr))
-      System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Ele deve que esperar o concerto.");
-    else if(carroSorteado.calcularProbabilidadeAbastecimento(probAbast))
-      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.");
-    else {
-      carroSorteado.somarKilometrosRodados(kilometrosPercorridos());
-      if(verificarPassagemDeVoltasEVencedor())
-        return carroSorteado;
+    if(carroSorteado == null)
+      return null;
+    while(!carroSorteado.isComCombustivel()){
+      carroSorteado.setComCombustivel(true);
+      carroSorteado = escolheCarroParaAcao();
     }
+    carroSorteado.somarKilometrosRodados(kilometrosPercorridos());
+    if(verificarEstadoDoCarro(carroSorteado))
+      return carroSorteado;
     return null;
   }
  
   public Carro escolheCarroParaAcao() {
     Armazem acessoAosCarros = getArmazem();
     Integer idSorteado = acessoAosCarros.idPossiveldeCarro();
+    if(idSorteado == -1)
+      return null;
     ArrayList<Carro> listaCarros = acessoAosCarros.getListaDeCarrosClone();
     for(var car : listaCarros)
       if(car.getId_carro() == idSorteado)
