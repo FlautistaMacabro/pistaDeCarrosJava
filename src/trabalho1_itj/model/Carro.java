@@ -17,33 +17,6 @@ public class Carro {
   private int voltasPercorridas;
   private boolean comCombustivel;
 //  private boolean emFuncionamento;
-
-  public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
-    setId_carro(id_carro);
-    setNome(nome);
-    setKilometrosRodados(0);
-    setKilometrosRodados(0);
-    setComCombustivel(comCombustivel);
-//    setEmFuncionamento(emFuncionamento);
-  }
-  
-  public Carro(int id_carro, String nome, boolean comCombustivel) {
-    setId_carro(id_carro);
-    setNome(nome);
-    setKilometrosRodados(0);
-    setVoltasPercorridas(0);
-    setComCombustivel(comCombustivel);
-//    setEmFuncionamento(true);
-  }
-  
-  public Carro(String nome, int id_carro, boolean emFuncionamento) {
-    setId_carro(id_carro);
-    setNome(nome);
-    setKilometrosRodados(0);
-    setVoltasPercorridas(0);
-    setComCombustivel(true);
-//    setEmFuncionamento(emFuncionamento);
-  }
   
   public Carro(int id_carro, String nome) {
     setId_carro(id_carro);
@@ -53,6 +26,33 @@ public class Carro {
     setComCombustivel(true);
 //    setEmFuncionamento(true);
   }
+
+//  public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
+//    setId_carro(id_carro);
+//    setNome(nome);
+//    setKilometrosRodados(0);
+//    setKilometrosRodados(0);
+//    setComCombustivel(comCombustivel);
+//    setEmFuncionamento(emFuncionamento);
+//  }
+//  
+//  public Carro(int id_carro, String nome, boolean comCombustivel) {
+//    setId_carro(id_carro);
+//    setNome(nome);
+//    setKilometrosRodados(0);
+//    setVoltasPercorridas(0);
+//    setComCombustivel(comCombustivel);
+//    setEmFuncionamento(true);
+//  }
+//  
+//  public Carro(String nome, int id_carro, boolean emFuncionamento) {
+//    setId_carro(id_carro);
+//    setNome(nome);
+//    setKilometrosRodados(0);
+//    setVoltasPercorridas(0);
+//    setComCombustivel(true);
+//    setEmFuncionamento(emFuncionamento);
+//  }
 
   public int getId_carro() {
     return id_carro;

@@ -18,13 +18,13 @@ public class Corrida {
   private float probAbastecimento;
   private final Armazem armazem;
   private int posicaoDisputada;
-  private final String frasePrimeiroLugar = "1º (PRIMEIRO)";
-  private final String fraseSegundoLugar = "2º (SEGUNDO)";
-  private final String fraseTerceiroLugar = "3º (TERCEIRO)";
+  private final String frasePrimeiroLugar = "1 (PRIMEIRO)";
+  private final String fraseSegundoLugar = "2 (SEGUNDO)";
+  private final String fraseTerceiroLugar = "3 (TERCEIRO)";
 
   public Corrida(int quantCarros, int voltas, float probQuebra, float probAbastecimento) {
-    if(voltas < 10)
-      voltas = 10;
+    if(voltas < 11)
+      voltas = 11;
     armazem = new Armazem(quantCarros);
     setVoltas(voltas);
     setProbQuebra(probQuebra);
@@ -36,21 +36,17 @@ public class Corrida {
   public void iniciarCorrida(){
     Carro[] vencedores = {null,null,null};
     Armazem verificarExistenciaDeCarros = getArmazem();
-    int continuarCorrida = 0;
-    for (int i = 0; i < 3; i++)
-      while(vencedores[i] == null){
-        continuarCorrida = verificarExistenciaDeCarros.idPossiveldeCarro();
-        if(continuarCorrida == -1)
-          break;
+    int i = 0;
+    for (; i < 3; i++)
+      while(vencedores[i] == null && verificarExistenciaDeCarros.idPossiveldeCarro() != -1)
         vencedores[i] = realizaAcaoDoCarro();
-      }
-    if(continuarCorrida == -1){
-      System.out.println("\n\t\t NAO FOI POSSIVEL TERMINAR A CORRIDA !!!\n");
-      return;
-    }
     System.out.println("\n\t\t PODIO \n");
-    for (int i = 0; i < 3; i++)
-      System.out.println("\tO "+(i+1)+"º colocado foi o: "+vencedores[i].getNome()+" !!!");
+    for (i = 0; i < 3; i++)
+      if(vencedores[i] != null)
+        System.out.println("\tO "+(i+1)+" colocado foi o: "+vencedores[i].getNome()+" !!!");
+      else break;
+    for (; i < 3; i++)
+        System.out.println("\tNENHUM competidor chegou em "+(i+1)+" LUGAR !!!");
   }
   
   public boolean verificarEstadoDoCarro(Carro carroSorteado){
@@ -83,7 +79,7 @@ public class Corrida {
       
       if(carroSorteado.calcularProbabilidadeQuebra(probQuebr)){
         Armazem acessoAosCarros = getArmazem();
-        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele está FORA DA CORRIDA !!\n");
+        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele esta FORA DA CORRIDA !!\n");
         acessoAosCarros.removerCarroDaCorrida(carroSorteado);
       }
       else if(carroSorteado.calcularProbabilidadeAbastecimento(probAbast))
