@@ -68,7 +68,6 @@ public class Armazem {
     var listaCarros = getListaDeCarros();
     var listaIds = getIdsPossiveis();
     Integer idCarro = car.getId_carro();
-    listaCarros.remove(car);
     listaIds.remove(idCarro);
   }
 
