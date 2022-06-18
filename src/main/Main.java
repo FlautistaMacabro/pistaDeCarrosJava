@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package trabalho1_itj;
+package main;
 
-import trabalho1_itj.model.Corrida;
+import persistencia.RegistrosGerais;
 
 /**
  *
@@ -16,8 +16,8 @@ public class Main {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Corrida corrida = new Corrida(5, 11, 5, 20);
-    corrida.iniciarCorrida();
+    RegistrosGerais corridaRegistrada = new RegistrosGerais(5, 11, 5, 20);
+//    corridaRegistrada.imprimirPosicoes();
   }
   
 }

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabalho1_itj.model;
+package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -25,23 +26,12 @@ public class Armazem {
     cadastrarIDs();
   }
   
-  public void imprimirListaCarros() {
-    var listaCarros = getListaDeCarrosClone();
-    for(var car : listaCarros){
-      System.out.println("ID: "+car.getId_carro()+" Nome: "+car.getNome());
-    }
-  }
-  
   private void cadastrarListaCarros(){
     int quant = getQuantCarros();
     var listaCarros = getListaDeCarros();
     ArrayList<Integer> listaIds = getIdsPossiveis();
-    for (int i = 0; i < quant; i++) {
-      Integer index = idPossiveldeCarro();
-      Carro car = new Carro(index,"Carro "+(i+1));
-      listaCarros.add(car);
-      listaIds.remove(index);
-    }
+    for (int i = 0; i < quant; i++)
+      listaCarros.add(new Carro(idCarroParaCriacao(),"Carro "+(i+1)));
   }
   
   private void cadastrarIDs(){
@@ -52,10 +42,22 @@ public class Armazem {
     }
   }
   
-  public Integer idPossiveldeCarro() {
+  public Integer idCarroParaCriacao() {
+    ArrayList<Integer> listaIds = getIdsPossiveis();
+    Integer index = idCarroAleatorio();
+    listaIds.remove(index);
+    return index;
+  }
+  
+  public Integer idCarroParaCorrida() {
     ArrayList<Integer> listaIds = getIdsPossiveis();
     if(listaIds.isEmpty())
       return -1;
+    return idCarroAleatorio();
+  }
+  
+  public Integer idCarroAleatorio() {
+    ArrayList<Integer> listaIds = getIdsPossiveis();
     int quant = getQuantCarros();
     Random rand = new Random();
     Integer index = rand.nextInt(quant);
@@ -70,6 +72,26 @@ public class Armazem {
     Integer idCarro = car.getId_carro();
     listaIds.remove(idCarro);
   }
+  
+  public int quantIDsPossiveisCarro(){
+    return getIdsPossiveis().size();
+  }
+  
+  public Carro buscaCarroPorID(int idCarro){
+    var listaCarros = getListaDeCarrosClone();
+    for(Carro carro : listaCarros)
+      if(carro.getId_carro() == idCarro)
+        return carro;
+    return null;
+  }
+  
+//  public boolean verificaCarroCruzouALinha(int idCarro){
+//    var listaIDPossiveis = getIdsPossiveis();
+//    for(Integer id : listaIDPossiveis)
+//      if(id == idCarro)
+//        return true;
+//    return false;
+//  }
 
   private ArrayList<Integer> getIdsPossiveis() {
     return idsPossiveis;
@@ -90,6 +112,12 @@ public class Armazem {
 
   public final void setQuantCarros(int quantCarros) {
     this.quantCarros = quantCarros;
+  }
+  
+  public ArrayList<Carro> getCarrosOrdenadosColocacao() {
+    var listaCarrosOrdenada = getListaDeCarrosClone();
+    Collections.sort(listaCarrosOrdenada);
+    return listaCarrosOrdenada;
   }
   
 }

@@ -2,23 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trabalho1_itj.model;
-
-import java.util.Random;
+package model;
 
 /**
  *
  * @author vinip
  */
-public class Carro {
-  private int id_carro;
+public class Carro implements Comparable<Carro> {
   private String nome;
+  private int id_carro;
   private int kilometrosRodados;
   private int voltasPercorridas;
+  private int colocacao;
   private boolean comCombustivel;
-//  private boolean emFuncionamento;
+  private boolean emFuncionamento;
+  
+  public Carro(int id_carro, String nome) {
+    setId_carro(id_carro);
+    setNome(nome);
+    setKilometrosRodados(0);
+    setVoltasPercorridas(0);
+    setColocacao(0);
+    setComCombustivel(true);
+    setEmFuncionamento(true);
+  }
 
-  public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
+  /*public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
     setId_carro(id_carro);
     setNome(nome);
     setKilometrosRodados(0);
@@ -43,22 +52,13 @@ public class Carro {
     setVoltasPercorridas(0);
     setComCombustivel(true);
 //    setEmFuncionamento(emFuncionamento);
-  }
-  
-  public Carro(int id_carro, String nome) {
-    setId_carro(id_carro);
-    setNome(nome);
-    setKilometrosRodados(0);
-    setVoltasPercorridas(0);
-    setComCombustivel(true);
-//    setEmFuncionamento(true);
-  }
+  }*/
 
   public int getId_carro() {
     return id_carro;
   }
 
-  private final void setId_carro(int id_carro) {
+  private void setId_carro(int id_carro) {
     this.id_carro = id_carro;
   }
 
@@ -66,7 +66,7 @@ public class Carro {
     return nome;
   }
 
-  private final void setNome(String nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
@@ -94,13 +94,21 @@ public class Carro {
     this.comCombustivel = comCombustivel;
   }
 
-//  public final boolean isEmFuncionamento() {
-//    return emFuncionamento;
-//  }
-//
-//  public final void setEmFuncionamento(boolean emFuncionamento) {
-//    this.emFuncionamento = emFuncionamento;
-//  }
+  public final boolean isEmFuncionamento() {
+    return emFuncionamento;
+  }
+
+  public final void setEmFuncionamento(boolean emFuncionamento) {
+    this.emFuncionamento = emFuncionamento;
+  }
+
+  public int getColocacao() {
+    return colocacao;
+  }
+
+  public final void setColocacao(int colocacao) {
+    this.colocacao = colocacao;
+  }
   
   public void somarKilometrosRodados(int kilometrosExtras){
     setKilometrosRodados(getKilometrosRodados()+kilometrosExtras);
@@ -114,18 +122,13 @@ public class Carro {
     setVoltasPercorridas(getVoltasPercorridas()+1);
   }
   
-  public boolean calcularProbabilidadeQuebra(float porcentagem){
-    return calcularProbabilidade(porcentagem);
+  public int getDistanciaPercorrida(int tamanhoPista){
+    return (tamanhoPista * getVoltasPercorridas()) + getKilometrosRodados();
   }
-  
-  public boolean calcularProbabilidadeAbastecimento(float porcentagem){
-    setComCombustivel(calcularProbabilidade(porcentagem));
-    return isComCombustivel();
-  }
-  
-  private boolean calcularProbabilidade(float porcentagem){
-    Random rand = new Random();
-    return rand.nextInt((int) (100/porcentagem))==0;
+
+  @Override
+  public int compareTo(Carro carroComparar) {
+    return getColocacao() - carroComparar.getColocacao();
   }
   
 }
