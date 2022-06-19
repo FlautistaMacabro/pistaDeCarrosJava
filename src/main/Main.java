@@ -4,6 +4,9 @@
  */
 package main;
 
+import controller.Controller;
+import view.ConfiguracoesCorridaView;
+
 /**
  *
  * @author vinip
@@ -17,6 +20,11 @@ public class Main {
   public static void main(String[] args) throws CloneNotSupportedException {
 //    RegistrosGerais corridaRegistrada = new RegistrosGerais(8, 11, 5, 20);
 //    corridaRegistrada.imprimirPosicoes();
+
+      ConfiguracoesCorridaView view = new ConfiguracoesCorridaView();
+      Controller controller = new Controller(view);
+                
+      view.setVisible(true);
   }
   
 }
