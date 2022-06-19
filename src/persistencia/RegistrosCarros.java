@@ -2,22 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package persistencia;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import model.Carro;
 
 /**
  *
  * @author vinip
  */
-public class Armazem {
+public class RegistrosCarros {
   private final ArrayList<Carro> listaDeCarros;
   private final ArrayList<Integer> idsPossiveis;
   private int quantCarros;
 
-  public Armazem(int quantCarros) {
+  public RegistrosCarros(int quantCarros) {
     listaDeCarros = new ArrayList<>();
     idsPossiveis = new ArrayList<>();
     setQuantCarros(quantCarros);

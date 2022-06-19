@@ -4,6 +4,7 @@
  */
 package model;
 
+import persistencia.RegistrosCarros;
 import persistencia.RegistrosVoltas;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +19,7 @@ public class Corrida {
   private int posicaoDisputada;
   private float probQuebra;
   private float probAbastecimento;
-  private final Armazem armazem;
+  private final RegistrosCarros armazem;
   private final RegistrosVoltas registrosVoltas;
   private final String frasePrimeiroLugar = "1 (PRIMEIRO)";
   private final String fraseSegundoLugar = "2 (SEGUNDO)";
@@ -28,7 +29,7 @@ public class Corrida {
     int tamanhoDaPista = 20;
     if(voltas < 11)
       voltas = 11;
-    armazem = new Armazem(quantCarros);
+    armazem = new RegistrosCarros(quantCarros);
     registrosVoltas = new RegistrosVoltas(voltas);
     setVoltaAtual(1);
     setProbQuebra(probQuebra);
@@ -77,7 +78,7 @@ public class Corrida {
     int quantVoltas = getRegistrosVoltas().getQuantVoltas();
     int voltasPercorridas = carro.getVoltasPercorridas();
     if(voltasPercorridas >= quantVoltas){
-      Armazem acessoAosCarros = getArmazem();
+      RegistrosCarros acessoAosCarros = getArmazem();
       int colocacao = getPosicaoDisputada();
       carro.setColocacao(colocacao);
       setPosicaoDisputada(colocacao+1);
@@ -160,7 +161,7 @@ public class Corrida {
   }
  
   public Carro escolheCarroParaAcao() {
-    Armazem acessoAosCarros = getArmazem();
+    RegistrosCarros acessoAosCarros = getArmazem();
     Integer idSorteado = acessoAosCarros.idCarroParaCorrida();
     if(idSorteado == -1)
       return null;
@@ -177,7 +178,7 @@ public class Corrida {
     return ((new Random()).nextInt(maximoKilometros+1-minimoKilometros))+minimoKilometros;
   }
 
-  public Armazem getArmazem() {
+  public RegistrosCarros getArmazem() {
     return armazem;
   }
 
