@@ -8,7 +8,7 @@ package model;
  *
  * @author vinip
  */
-public class Carro implements Comparable<Carro> {
+public class Carro implements Comparable<Carro>, Cloneable{
   private String nome;
   private int id_carro;
   private int kilometrosRodados;
@@ -129,6 +129,11 @@ public class Carro implements Comparable<Carro> {
   @Override
   public int compareTo(Carro carroComparar) {
     return getColocacao() - carroComparar.getColocacao();
+  }
+  
+  @Override
+  public Carro clone() throws CloneNotSupportedException{
+    return (Carro) super.clone();
   }
   
 }

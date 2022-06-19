@@ -15,8 +15,8 @@ import model.Corrida;
 public class RegistrosGerais {
   private Corrida corrida;
 
-  public RegistrosGerais(int quantCarros, int voltas, float probQuebra, float probAbastecimento) {
-    Corrida corridaAux = new Corrida(5, 11, 5, 20);
+  public RegistrosGerais(int quantCarros, int voltas, float probQuebra, float probAbastecimento) throws CloneNotSupportedException {
+    Corrida corridaAux = new Corrida(quantCarros, voltas, probQuebra, probAbastecimento);
     setCorrida(corridaAux);
     realizarCorrida();
   }
@@ -29,25 +29,25 @@ public class RegistrosGerais {
     this.corrida = corrida;
   }
   
-  private void realizarCorrida(){
+  private void realizarCorrida() throws CloneNotSupportedException{
     getCorrida().iniciarCorrida();
   }
   
-  public ArrayList<String> getColocacaoFinal() {
+  public ArrayList<Carro> getListaCarrosOrdenadosColocacao() throws CloneNotSupportedException {
     ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getArmazem()).getCarrosOrdenadosColocacao();
-    ArrayList<String> listaNomesCarros = new ArrayList<>();
+    ArrayList<Carro> listaNomesCarros = new ArrayList<>();
     for(Carro carro : listaCarrosOrdenados)
       if(carro.isEmFuncionamento())
-        listaNomesCarros.add(carro.getNome());
+        listaNomesCarros.add(carro.clone());
     return listaNomesCarros;
   }
   
-//  public void imprimirPosicoes() {
-//    ArrayList<String> listaCarrosOrdenados = getColocacaoFinal();
-//    System.out.println("\t CLASSIFICACAO \n\n");
-//    int tam = listaCarrosOrdenados.size();
-//    for (int i = 0; i < tam; i++)
-//      System.out.println("\t"+(i+1)+" lugar: "+listaCarrosOrdenados.get(i));
-//  }
+  public void imprimirPosicoes() throws CloneNotSupportedException {
+    ArrayList<Carro> listaCarrosOrdenados = getListaCarrosOrdenadosColocacao();
+    System.out.println("\t CLASSIFICACAO \n\n");
+    int tam = listaCarrosOrdenados.size();
+    for (int i = 0; i < tam; i++)
+      System.out.println("\t"+(i+1)+" lugar: "+listaCarrosOrdenados.get(i).getNome());
+  }
   
 }

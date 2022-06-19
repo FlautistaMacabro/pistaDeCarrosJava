@@ -5,6 +5,7 @@
 package persistencia;
 
 import java.util.ArrayList;
+import model.Carro;
 import model.Volta;
 
 /**
@@ -31,31 +32,31 @@ public class RegistrosVoltas {
     return quantVoltas;
   }
   
-  public ArrayList<String> getPodioFinalCorrida() {
+  public ArrayList<Carro> getPodioFinalCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
     return listaVoltasAux.get(getQuantVoltas()-1).getListaNomesCarrosNoPodioClone();
   }
   
-  public ArrayList<Integer> getIDsCarrosAbasteceramTodaCorrida() {
+  public ArrayList<Carro> getCarrosAbasteceramTodaCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
-    ArrayList<Integer> listaIDsCarrosAbasteceramTodaCorrida = new ArrayList<>();
+    ArrayList<Carro> listaCarrosAbasteceramTodaCorrida = new ArrayList<>();
     for(Volta volta : listaVoltasAux){
-      ArrayList<Integer> listaIDsCarrosAbasteceramVolta = volta.getListaIDsCarrosAbasteceramClone();
-      for(Integer id : listaIDsCarrosAbasteceramVolta)
-        listaIDsCarrosAbasteceramTodaCorrida.add(id);
+      ArrayList<Carro> listaCarrosAbasteceramVolta = volta.getListaIDsCarrosAbasteceramClone();
+      for(Carro car : listaCarrosAbasteceramVolta)
+        listaCarrosAbasteceramTodaCorrida.add(car.clone());
     }
-    return listaIDsCarrosAbasteceramTodaCorrida;
+    return listaCarrosAbasteceramTodaCorrida;
   }
   
-  public ArrayList<Integer> getIDsCarrosQuebraramTodaCorrida() {
+  public ArrayList<Carro> getCarrosQuebraramTodaCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
-    ArrayList<Integer> listaIDsCarrosQuebraramTodaCorrida = new ArrayList<>();
+    ArrayList<Carro> listaCarrosQuebraramTodaCorrida = new ArrayList<>();
     for(Volta volta : listaVoltasAux){
-      ArrayList<Integer> listaIDsCarrosQuebraramVolta = volta.getListaIDsCarrosQuebraramClone();
-      for(Integer id : listaIDsCarrosQuebraramVolta)
-        listaIDsCarrosQuebraramTodaCorrida.add(id);
+      ArrayList<Carro> listaCarrosQuebraramVolta = volta.getListaIDsCarrosQuebraramClone();
+      for(Carro car : listaCarrosQuebraramVolta)
+        listaCarrosQuebraramTodaCorrida.add(car.clone());
     }
-    return listaIDsCarrosQuebraramTodaCorrida;
+    return listaCarrosQuebraramTodaCorrida;
   }
 
   private ArrayList<Volta> getListaVoltas() {

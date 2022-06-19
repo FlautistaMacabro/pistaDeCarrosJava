@@ -14,10 +14,11 @@ public class Main {
 
   /**
    * @param args the command line arguments
+   * @throws java.lang.CloneNotSupportedException
    */
-  public static void main(String[] args) {
-    RegistrosGerais corridaRegistrada = new RegistrosGerais(5, 11, 5, 20);
-//    corridaRegistrada.imprimirPosicoes();
+  public static void main(String[] args) throws CloneNotSupportedException {
+    RegistrosGerais corridaRegistrada = new RegistrosGerais(8, 11, 5, 20);
+    corridaRegistrada.imprimirPosicoes();
   }
   
 }

@@ -37,7 +37,7 @@ public class Corrida {
     setPosicaoDisputada(1);
   }
   
-  public void iniciarCorrida(){
+  public void iniciarCorrida() throws CloneNotSupportedException{
     while(continuarCorrida())
       realizaAcaoDoCarro();
   }
@@ -46,7 +46,7 @@ public class Corrida {
     return (getArmazem().quantIDsPossiveisCarro() > 0);
   }
   
-  public boolean verificarEstadoGeralDoCarro(Carro carro){
+  public boolean verificarEstadoGeralDoCarro(Carro carro) throws CloneNotSupportedException{
     if(verificaCarroDeuVolta(carro)){
       if(verificaCarroVenceu(carro))
         return true;
@@ -55,7 +55,7 @@ public class Corrida {
     return false;
   }
   
-  public boolean verificaCarroDeuVolta(Carro carro){
+  public boolean verificaCarroDeuVolta(Carro carro) throws CloneNotSupportedException{
     int tamanhoVolta = getTamanhoPista();
     if(carro.getKilometrosRodados() >= tamanhoVolta){
 //      String nomeCarro = carro.getNome();
@@ -96,17 +96,17 @@ public class Corrida {
     return false;
   }
   
-  public void registroEventosNaVolta(Carro carro){
+  public void registroEventosNaVolta(Carro carro) throws CloneNotSupportedException{
     Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(getVoltaAtual()-1);
-    ArrayList<Carro> listaCarros = getArmazem().getListaDeCarrosClone();
+    ArrayList<Carro> listaCarros = getArmazem().getListaDeCarrosRealClone();
     // Primeiro lugar
-    voltaRegistro.addListaNomesCarrosNoPodio(carro.getNome());
+    voltaRegistro.addListaCarrosNoPodio(carro);
     Carro segundo = new Carro(-2, "");
     Carro terceiro = new Carro(-3, "");
     int tamanhoPista = getTamanhoPista();
     for(Carro car : listaCarros){
       if(!car.isEmFuncionamento())
-        voltaRegistro.addListaIDsCarrosQuebraram(car.getId_carro());
+        voltaRegistro.addListaCarrosQuebraram(car);
       else {
         int distanciaPercorridaCarro = car.getDistanciaPercorrida(tamanhoPista);
         if(segundo.getDistanciaPercorrida(tamanhoPista) < distanciaPercorridaCarro && car.getId_carro() != carro.getId_carro()){
@@ -117,7 +117,7 @@ public class Corrida {
     }
   }
   
-  public void registraQuebraEFaltaCombustivel(Carro carro){
+  public void registraQuebraEFaltaCombustivel(Carro carro) throws CloneNotSupportedException{
 //    String nomeCarro = carro.getNome();
     if(calculaQuebra()){
         carro.setEmFuncionamento(false);
@@ -127,7 +127,7 @@ public class Corrida {
     else if(calculaAbastecimento()){
         carro.setComCombustivel(false);
         Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(getVoltaAtual()-1);
-        voltaRegistro.addListaIDsCarrosAbasteceram(carro.getId_carro());
+        voltaRegistro.addListaCarrosAbasteceram(carro);
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
   }
@@ -145,7 +145,7 @@ public class Corrida {
     return rand.nextInt((int) (100/porcentagem))==0;
   }
   
-  public Carro realizaAcaoDoCarro() {
+  public Carro realizaAcaoDoCarro() throws CloneNotSupportedException {
     var carroSorteado = escolheCarroParaAcao();
     if(carroSorteado == null)
       return null;

@@ -67,7 +67,6 @@ public class Armazem {
   }
   
   public void removerCarroDaCorrida(Carro car){
-    var listaCarros = getListaDeCarros();
     var listaIds = getIdsPossiveis();
     Integer idCarro = car.getId_carro();
     listaIds.remove(idCarro);
@@ -77,13 +76,13 @@ public class Armazem {
     return getIdsPossiveis().size();
   }
   
-  public Carro buscaCarroPorID(int idCarro){
-    var listaCarros = getListaDeCarrosClone();
-    for(Carro carro : listaCarros)
-      if(carro.getId_carro() == idCarro)
-        return carro;
-    return null;
-  }
+//  public Carro buscaCarroPorID(int idCarro){
+//    var listaCarros = getListaDeCarrosClone();
+//    for(Carro carro : listaCarros)
+//      if(carro.getId_carro() == idCarro)
+//        return carro;
+//    return null;
+//  }
   
 //  public boolean verificaCarroCruzouALinha(int idCarro){
 //    var listaIDPossiveis = getIdsPossiveis();
@@ -105,6 +104,15 @@ public class Armazem {
     ArrayList<Carro> carrosListaClone = new ArrayList(getListaDeCarros());
     return carrosListaClone;
   }
+  
+  public ArrayList<Carro> getListaDeCarrosRealClone() throws CloneNotSupportedException{
+    var listaCarros = getListaDeCarros();
+    ArrayList<Carro> carrosListaClone = new ArrayList(listaCarros.size());
+    for(Carro car : listaCarros){
+      carrosListaClone.add(car.clone());
+    }
+    return carrosListaClone;
+  }
 
   public int getQuantCarros() {
     return quantCarros;
@@ -114,8 +122,8 @@ public class Armazem {
     this.quantCarros = quantCarros;
   }
   
-  public ArrayList<Carro> getCarrosOrdenadosColocacao() {
-    var listaCarrosOrdenada = getListaDeCarrosClone();
+  public ArrayList<Carro> getCarrosOrdenadosColocacao() throws CloneNotSupportedException {
+    var listaCarrosOrdenada = getListaDeCarrosRealClone();
     Collections.sort(listaCarrosOrdenada);
     return listaCarrosOrdenada;
   }
