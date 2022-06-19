@@ -42,12 +42,12 @@ public class RegistrosGerais {
     return listaNomesCarros;
   }
   
-  public void imprimirPosicoes() throws CloneNotSupportedException {
-    ArrayList<Carro> listaCarrosOrdenados = getListaCarrosOrdenadosColocacao();
-    System.out.println("\t CLASSIFICACAO \n\n");
-    int tam = listaCarrosOrdenados.size();
-    for (int i = 0; i < tam; i++)
-      System.out.println("\t"+(i+1)+" lugar: "+listaCarrosOrdenados.get(i).getNome());
-  }
+//  public void imprimirPosicoes() throws CloneNotSupportedException {
+//    ArrayList<Carro> listaCarrosOrdenados = getListaCarrosOrdenadosColocacao();
+//    System.out.println("\t CLASSIFICACAO \n\n");
+//    int tam = listaCarrosOrdenados.size();
+//    for (int i = 0; i < tam; i++)
+//      System.out.println("\t"+(i+1)+" lugar: "+listaCarrosOrdenados.get(i).getNome());
+//  }
   
 }

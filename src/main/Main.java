@@ -4,8 +4,6 @@
  */
 package main;
 
-import persistencia.RegistrosGerais;
-
 /**
  *
  * @author vinip
@@ -17,8 +15,8 @@ public class Main {
    * @throws java.lang.CloneNotSupportedException
    */
   public static void main(String[] args) throws CloneNotSupportedException {
-    RegistrosGerais corridaRegistrada = new RegistrosGerais(8, 11, 5, 20);
-    corridaRegistrada.imprimirPosicoes();
+//    RegistrosGerais corridaRegistrada = new RegistrosGerais(8, 11, 5, 20);
+//    corridaRegistrada.imprimirPosicoes();
   }
   
 }
