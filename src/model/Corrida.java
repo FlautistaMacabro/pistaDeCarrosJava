@@ -21,9 +21,9 @@ public class Corrida {
   private float probAbastecimento;
   private final RegistrosCarros armazem;
   private final RegistrosVoltas registrosVoltas;
-  private final String frasePrimeiroLugar = "1 (PRIMEIRO)";
-  private final String fraseSegundoLugar = "2 (SEGUNDO)";
-  private final String fraseTerceiroLugar = "3 (TERCEIRO)";
+//  private final String frasePrimeiroLugar = "1 (PRIMEIRO)";
+//  private final String fraseSegundoLugar = "2 (SEGUNDO)";
+//  private final String fraseTerceiroLugar = "3 (TERCEIRO)";
 
   public Corrida(int quantCarros, int voltas, float probQuebra, float probAbastecimento) {
     int tamanhoDaPista = 20;
@@ -44,7 +44,7 @@ public class Corrida {
   }
   
   public boolean continuarCorrida(){
-    return (getArmazem().quantIDsPossiveisCarro() > 0);
+    return (getRegistrosCarros().quantIDsPossiveisCarro() > 0);
   }
   
   public boolean verificarEstadoGeralDoCarro(Carro carro) throws CloneNotSupportedException{
@@ -62,10 +62,17 @@ public class Corrida {
 //      String nomeCarro = carro.getNome();
       carro.subtrairKilometrosDaVolta(tamanhoVolta);
       carro.somarUmaVolta();
+      RegistrosVoltas registrosVoltas = getRegistrosVoltas();
+      int quantVoltas = registrosVoltas.getQuantVoltas();
+      int voltasPercorridasCarro = carro.getVoltasPercorridas();
+      int voltaAtual = getVoltaAtual();
+      if(voltasPercorridasCarro >= quantVoltas){
+        Volta voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-1);
+        voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+voltaAtual+"º VOLTA!\n");
+      }
 //  Mensagem de VOLTA REALIZADA
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
-      int voltasPercorridasCarro = carro.getVoltasPercorridas();
-      if((voltasPercorridasCarro+1) > getVoltaAtual()){
+      if((voltasPercorridasCarro+1) > voltaAtual){
         registroEventosNaVolta(carro);
         setVoltaAtual(voltasPercorridasCarro);
       }
@@ -78,11 +85,14 @@ public class Corrida {
     int quantVoltas = getRegistrosVoltas().getQuantVoltas();
     int voltasPercorridas = carro.getVoltasPercorridas();
     if(voltasPercorridas >= quantVoltas){
-      RegistrosCarros acessoAosCarros = getArmazem();
+      RegistrosCarros acessoAosCarros = getRegistrosCarros();
       int colocacao = getPosicaoDisputada();
+      int voltaAtual = getVoltaAtual();
       carro.setColocacao(colocacao);
       setPosicaoDisputada(colocacao+1);
       acessoAosCarros.removerCarroDaCorrida(carro);
+      Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(voltaAtual-1);
+      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" CRUZOU A LINHA DE CHEGADA !!!\n");
 //      String fraseColocacao = "";
 //      switch(colocacao){
 //        case 1 -> fraseColocacao = getFrasePrimeiroLugar();
@@ -99,7 +109,7 @@ public class Corrida {
   
   public void registroEventosNaVolta(Carro carro) throws CloneNotSupportedException{
     Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(getVoltaAtual()-1);
-    ArrayList<Carro> listaCarros = getArmazem().getListaDeCarrosRealClone();
+    ArrayList<Carro> listaCarros = getRegistrosCarros().getListaDeCarrosRealClone();
     // Primeiro lugar
     voltaRegistro.addListaCarrosNoPodio(carro);
     Carro segundo = new Carro(-2, "");
@@ -111,24 +121,28 @@ public class Corrida {
       else {
         int distanciaPercorridaCarro = car.getDistanciaPercorrida(tamanhoPista);
         if(segundo.getDistanciaPercorrida(tamanhoPista) < distanciaPercorridaCarro && car.getId_carro() != carro.getId_carro()){
-          terceiro.setNome(segundo.getNome());
-          segundo.setNome(car.getNome());
+          terceiro = segundo;
+          segundo = car;
         }
       }
     }
+    voltaRegistro.addListaCarrosNoPodio(segundo);
+    voltaRegistro.addListaCarrosNoPodio(terceiro);
   }
   
   public void registraQuebraEFaltaCombustivel(Carro carro) throws CloneNotSupportedException{
 //    String nomeCarro = carro.getNome();
+    Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(getVoltaAtual()-1);
     if(calculaQuebra()){
         carro.setEmFuncionamento(false);
-        getArmazem().removerCarroDaCorrida(carro);
+        getRegistrosCarros().removerCarroDaCorrida(carro);
+        voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" QUEBROU! Infelizmente ele SAIU DA CORRIDA !!\n");
 //        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele esta FORA DA CORRIDA !!\n");
     }
     else if(calculaAbastecimento()){
         carro.setComCombustivel(false);
-        Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(getVoltaAtual()-1);
-        voltaRegistro.addListaCarrosAbasteceram(carro);
+        voltaRegistro.addListaAbastecimentosCarros(carro);
+        voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" ABASTECEU! Ele teve que esperar o pit stop.\n");
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
   }
@@ -161,7 +175,7 @@ public class Corrida {
   }
  
   public Carro escolheCarroParaAcao() {
-    RegistrosCarros acessoAosCarros = getArmazem();
+    RegistrosCarros acessoAosCarros = getRegistrosCarros();
     Integer idSorteado = acessoAosCarros.idCarroParaCorrida();
     if(idSorteado == -1)
       return null;
@@ -178,7 +192,7 @@ public class Corrida {
     return ((new Random()).nextInt(maximoKilometros+1-minimoKilometros))+minimoKilometros;
   }
 
-  public RegistrosCarros getArmazem() {
+  public RegistrosCarros getRegistrosCarros() {
     return armazem;
   }
 

@@ -34,7 +34,7 @@ public class RegistrosGerais {
   }
   
   public ArrayList<Carro> getListaCarrosOrdenadosColocacao() throws CloneNotSupportedException {
-    ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getArmazem()).getCarrosOrdenadosColocacao();
+    ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getRegistrosCarros()).getCarrosOrdenadosColocacao();
     ArrayList<Carro> listaNomesCarros = new ArrayList<>();
     for(Carro carro : listaCarrosOrdenados)
       if(carro.isEmFuncionamento())

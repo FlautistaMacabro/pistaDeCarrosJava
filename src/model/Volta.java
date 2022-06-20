@@ -11,18 +11,20 @@ import java.util.ArrayList;
  * @author vinip
  */ // colo kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 public class Volta {
-  private final ArrayList<Carro> listaIDsCarrosAbasteceram;
-  private final ArrayList<Carro> listaIDsCarrosQuebraram;
-  private final ArrayList<Carro> listaNomesCarrosNoPodio;
+  private final ArrayList<String> listaEventosGerais;
+  private final ArrayList<Carro> listaAbastecimentosCarros;
+  private final ArrayList<Carro> listaCarrosQuebraram;
+  private final ArrayList<Carro> listaCarrosNoPodio;
 
   public Volta() {
-    this.listaIDsCarrosAbasteceram = new ArrayList<>();
-    this.listaIDsCarrosQuebraram = new ArrayList<>();
-    this.listaNomesCarrosNoPodio = new ArrayList<>();
+    this.listaEventosGerais = new ArrayList<>();
+    this.listaAbastecimentosCarros = new ArrayList<>();
+    this.listaCarrosQuebraram = new ArrayList<>();
+    this.listaCarrosNoPodio = new ArrayList<>();
   }
 
-  public ArrayList<Carro> getListaIDsCarrosAbasteceramClone() throws CloneNotSupportedException {
-    var listaCarros = getListaCarrosAbasteceram();
+  public ArrayList<Carro> getListaAbastecimentosCarrosClone() throws CloneNotSupportedException {
+    var listaCarros = getListaAbastecimentosCarros();
     ArrayList<Carro> carrosListaClone = new ArrayList(listaCarros.size());
     for(Carro car : listaCarros){
       carrosListaClone.add(car.clone());
@@ -30,7 +32,7 @@ public class Volta {
     return carrosListaClone;
   }
   
-  public ArrayList<Carro> getListaIDsCarrosQuebraramClone() throws CloneNotSupportedException {
+  public ArrayList<Carro> getListaCarrosQuebraramClone() throws CloneNotSupportedException {
     var listaCarros = getListaCarrosQuebraram();
     ArrayList<Carro> carrosListaClone = new ArrayList(listaCarros.size());
     for(Carro car : listaCarros){
@@ -39,7 +41,7 @@ public class Volta {
     return carrosListaClone;
   }
   
-  public ArrayList<Carro> getListaNomesCarrosNoPodioClone() throws CloneNotSupportedException {
+  public ArrayList<Carro> getListaCarrosNoPodioClone() throws CloneNotSupportedException {
     var listaCarros = getListaCarrosNoPodio();
     ArrayList<Carro> carrosListaClone = new ArrayList(listaCarros.size());
     for(Carro car : listaCarros){
@@ -48,8 +50,12 @@ public class Volta {
     return carrosListaClone;
   }
   
-  public void addListaCarrosAbasteceram(Carro carro) throws CloneNotSupportedException {
-    getListaCarrosAbasteceram().add(carro.clone());
+  public void addListaEventosGerais(String evento) {
+    getListaEventosGerais().add(evento);
+  }
+  
+  public void addListaAbastecimentosCarros(Carro carro) throws CloneNotSupportedException {
+    getListaAbastecimentosCarros().add(carro.clone());
   }
   
   public void addListaCarrosQuebraram(Carro carro) throws CloneNotSupportedException {
@@ -60,16 +66,20 @@ public class Volta {
     getListaCarrosNoPodio().add(vencedor.clone());
   }
 
-  private ArrayList<Carro> getListaCarrosAbasteceram() {
-    return listaIDsCarrosAbasteceram;
+  public ArrayList<String> getListaEventosGerais() {
+    return listaEventosGerais;
+  }
+
+  private ArrayList<Carro> getListaAbastecimentosCarros() {
+    return listaAbastecimentosCarros;
   }
 
   private ArrayList<Carro> getListaCarrosQuebraram() {
-    return listaIDsCarrosQuebraram;
+    return listaCarrosQuebraram;
   }
 
   private ArrayList<Carro> getListaCarrosNoPodio() {
-    return listaNomesCarrosNoPodio;
+    return listaCarrosNoPodio;
   }
   
 }

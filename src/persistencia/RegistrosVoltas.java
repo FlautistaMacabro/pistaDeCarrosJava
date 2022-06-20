@@ -32,16 +32,27 @@ public class RegistrosVoltas {
     return quantVoltas;
   }
   
+  public ArrayList<String> getEventosGeraisTodaCorrida() {
+    ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
+    ArrayList<String> listaEventosTodaCorrida = new ArrayList<>();
+    for(Volta volta : listaVoltasAux){
+      ArrayList<String> listaEventos = volta.getListaEventosGerais();
+      for(String evento : listaEventos)
+        listaEventosTodaCorrida.add(evento);
+    }
+    return listaEventosTodaCorrida;
+  }
+  
   public ArrayList<Carro> getPodioFinalCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
-    return listaVoltasAux.get(getQuantVoltas()-1).getListaNomesCarrosNoPodioClone();
+    return listaVoltasAux.get(getQuantVoltas()-1).getListaCarrosNoPodioClone();
   }
   
   public ArrayList<Carro> getCarrosAbasteceramTodaCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
     ArrayList<Carro> listaCarrosAbasteceramTodaCorrida = new ArrayList<>();
     for(Volta volta : listaVoltasAux){
-      ArrayList<Carro> listaCarrosAbasteceramVolta = volta.getListaIDsCarrosAbasteceramClone();
+      ArrayList<Carro> listaCarrosAbasteceramVolta = volta.getListaAbastecimentosCarrosClone();
       for(Carro car : listaCarrosAbasteceramVolta)
         listaCarrosAbasteceramTodaCorrida.add(car.clone());
     }
@@ -52,7 +63,7 @@ public class RegistrosVoltas {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
     ArrayList<Carro> listaCarrosQuebraramTodaCorrida = new ArrayList<>();
     for(Volta volta : listaVoltasAux){
-      ArrayList<Carro> listaCarrosQuebraramVolta = volta.getListaIDsCarrosQuebraramClone();
+      ArrayList<Carro> listaCarrosQuebraramVolta = volta.getListaCarrosQuebraramClone();
       for(Carro car : listaCarrosQuebraramVolta)
         listaCarrosQuebraramTodaCorrida.add(car.clone());
     }
