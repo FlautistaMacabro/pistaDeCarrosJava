@@ -26,6 +26,16 @@ public class Carro implements Comparable<Carro>, Cloneable{
     setComCombustivel(true);
     setEmFuncionamento(true);
   }
+  
+  public Carro(int id_carro, String nome, int colocacao) {
+    setId_carro(id_carro);
+    setNome(nome);
+    setKilometrosRodados(0);
+    setVoltasPercorridas(0);
+    setColocacao(colocacao);
+    setComCombustivel(true);
+    setEmFuncionamento(true);
+  }
 
   /*public Carro(int id_carro, String nome, boolean comCombustivel, boolean emFuncionamento) {
     setId_carro(id_carro);
@@ -66,7 +76,7 @@ public class Carro implements Comparable<Carro>, Cloneable{
     return nome;
   }
 
-  public void setNome(String nome) {
+  public final void setNome(String nome) {
     this.nome = nome;
   }
 
