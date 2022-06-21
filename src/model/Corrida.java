@@ -71,7 +71,8 @@ public class Corrida {
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       if((voltasPercorridasCarro) > voltaAtual){
         registroEventosNaVolta(carro);
-        setVoltaAtual(voltasPercorridasCarro);
+        if(voltasPercorridasCarro <= registrosVoltas.getQuantVoltas())
+          setVoltaAtual(voltasPercorridasCarro);
       }
       return true;
     }
