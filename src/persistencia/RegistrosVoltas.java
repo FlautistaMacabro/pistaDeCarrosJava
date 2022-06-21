@@ -35,8 +35,11 @@ public class RegistrosVoltas {
   public ArrayList<String> getEventosGeraisTodaCorrida() {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
     ArrayList<String> listaEventosTodaCorrida = new ArrayList<>();
-    for(Volta volta : listaVoltasAux){
+    int quantVoltas = getQuantVoltas();
+    for(int i = 0; i < quantVoltas; i++){
+      Volta volta = listaVoltasAux.get(i);
       ArrayList<String> listaEventos = volta.getListaEventosGerais();
+      listaEventosTodaCorrida.add("\n--------------- Volta "+(i+1)+" ---------------\n");
       for(String evento : listaEventos)
         listaEventosTodaCorrida.add(evento);
     }
