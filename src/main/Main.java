@@ -4,7 +4,7 @@
  */
 package main;
 
-import controller.Controller;
+import controller.ConfiguracoesCorridaController;
 import view.ConfiguracoesCorridaView;
 
 /**
@@ -15,14 +15,10 @@ public class Main {
 
   /**
    * @param args the command line arguments
-   * @throws java.lang.CloneNotSupportedException
    */
-  public static void main(String[] args) throws CloneNotSupportedException {
-//    RegistrosGerais corridaRegistrada = new RegistrosGerais(8, 11, 5, 20);
-//    corridaRegistrada.imprimirPosicoes();
-
+  public static void main(String[] args){
       ConfiguracoesCorridaView view = new ConfiguracoesCorridaView();
-      Controller controller = new Controller(view);
+      ConfiguracoesCorridaController controller = new ConfiguracoesCorridaController(view);
                 
       view.setVisible(true);
   }

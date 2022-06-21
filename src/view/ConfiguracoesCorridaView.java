@@ -8,10 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -52,6 +49,22 @@ public class ConfiguracoesCorridaView extends JFrame {
     public void addButtonListener(ActionListener a) {
         botao.addActionListener(a);
     }
+    
+    public void addNumeroCarrosListener(KeyListener k) {
+        numeroCarros.addKeyListener(k);
+    }
+    
+    public void addNumeroVoltasListener(KeyListener k) {
+        numeroVoltas.addKeyListener(k);
+    }
+    
+    public void addProbabilidadeQuebraListener(KeyListener k) {
+        probabilidadeQuebra.addKeyListener(k);
+    }
+    
+    public void addProbabilidadeAbastecimentoListener(KeyListener k) {
+        probabilidadeAbastecimento.addKeyListener(k);
+    }
 
     //--------------- Inicialização de Componentes ---------------//
     private void initComponents() {
@@ -65,23 +78,27 @@ public class ConfiguracoesCorridaView extends JFrame {
         
         titulo = new JLabel("Configurações da Corrida");
         
-        numeroCarrosLabel = new JLabel("Inserir número de carros na corrida:");
+        numeroCarrosLabel = new JLabel("Inserir número de carros na corrida (maior que 1 e no máximo 20):");
         numeroCarros = new JTextField();
+        numeroCarros.setToolTipText("2 <= x <= 20");
         
-        numeroVoltasLabel = new JLabel("Inserir a quantidade de voltas (deve ser maior que 10):");
+        numeroVoltasLabel = new JLabel("Inserir a quantidade de voltas (maior que 10 e no máximo 30):");
         numeroVoltas = new JTextField();
+        numeroVoltas.setToolTipText("10 < x <= 30");
         
         probabilidadeQuebraLabel = new JLabel("Inserir probabilidade de quebra de carros:");
         probabilidadeQuebra = new JTextField();
+        probabilidadeQuebra.setToolTipText("0 <= x <= 100");
         
         probabilidadeAbastecimentoLabel = new JLabel("Inserir probabilidade para abastecimento:");
         probabilidadeAbastecimento = new JTextField();
+        probabilidadeAbastecimento.setToolTipText("0 <= x <= 100");
         
         botao = new JButton("Confirmar");
 
         //Configurações da Janela/Frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(600, 300);
         setLocationRelativeTo(null);
 
         //Layout e Panel
@@ -94,12 +111,7 @@ public class ConfiguracoesCorridaView extends JFrame {
         probabilidadeQuebraLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         probabilidadeAbastecimentoLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 
-       
-        addFilter(numeroCarros,8);
-        addFilter(numeroVoltas,8);
-        addFilter(probabilidadeQuebra,2);
-        addFilter(probabilidadeAbastecimento,2);
-
+        
         numeroCarros.setPreferredSize(new Dimension(100, 20));
         container1.setLayout(new FlowLayout());
         container1.add(numeroCarrosLabel);
@@ -138,39 +150,6 @@ public class ConfiguracoesCorridaView extends JFrame {
         container5.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         panel.add(container5);
         add(panel);
-    }
-
-    public static String maxLength(String entrada, int tamanho) {
-        StringBuffer saida = new StringBuffer();
-        char[] caracteres = removeCaracters(entrada).toCharArray();
-        for (int i = 0; i < caracteres.length && i <= tamanho; i++) {
-            saida.append(caracteres[i]);
-        }
-        return saida.toString();
-    }
-
-    public static String removeCaracters(String entrada) {
-        Pattern numericos = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE);
-        Matcher encaixe = numericos.matcher(entrada);
-        StringBuffer saida = new StringBuffer();
-        while (encaixe.find()) {
-            saida.append(encaixe.group());
-        }
-        return saida.toString();
-    }
-    
-    public static void addFilter(JTextField field, int tam){
-        field.addKeyListener(new KeyListener() {
-            public void keyTyped(KeyEvent e) {
-                field.setText(maxLength(field.getText(), tam));
-            }
-            public void keyPressed(KeyEvent e) {
-                field.setText(maxLength(field.getText(), tam));
-            }
-            public void keyReleased(KeyEvent e) {
-                field.setText(maxLength(field.getText(), tam));
-            }
-        });
     }
     
     //---------------Declaração de Variáveis---------------// 
