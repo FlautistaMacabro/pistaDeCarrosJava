@@ -4,23 +4,14 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +29,14 @@ public class CorridaView extends JFrame {
         super("Corrida");
         initComponents();
     }
+    
+    
+    //--------------- Métodos ---------------// 
+    public static void fillTextArea(ArrayList<String> data, JTextArea textArea) {
+        for (String a : data) {
+            textArea.append(a + "\n");
+        }
+    }
 
     //--------------- Setters ---------------// 
     public void setColocacao(JLabel label, String nome){
@@ -45,7 +44,42 @@ public class CorridaView extends JFrame {
     }
     
     
+    //--------------- Getters ---------------// 
+    public JTextArea getStatusTextArea(){
+        return statusTextArea;
+    }
+    
+    public JLabel getPrimeiroLugar(){
+        return primeiroLugar;
+    }
+    
+    public JLabel getSegundoLugar(){
+        return segundoLugar;
+    }
+    
+    public JLabel getTerceiroLugar(){
+        return terceiroLugar;
+    }
+    
+    
     //--------------- Listeners ---------------//
+    public void addStatusCarrosJTextAreaListener(HierarchyListener h) {
+       statusTextArea.addHierarchyListener(h);
+    }
+     
+    public void addPrimeiroLugarJLabelListener(HierarchyListener h) {
+        primeiroLugar.addHierarchyListener(h);
+    }
+    
+    public void addSegundoLugarJLabelListener(HierarchyListener h) {
+        segundoLugar.addHierarchyListener(h);
+    }
+    
+    public void addTerceiroLugarJLabelListener(HierarchyListener h) {
+        terceiroLugar.addHierarchyListener(h);
+    }
+    
+    
     //--------------- Inicialização de Componentes ---------------//
     private void initComponents() {
         //Instanciação de Componentes
@@ -61,9 +95,6 @@ public class CorridaView extends JFrame {
         primeiroLugar = new JLabel("Primeiro Lugar: ");
         segundoLugar = new JLabel("Segundo Lugar: ");
         terceiroLugar = new JLabel("Terceiro Lugar: ");
-        setColocacao(primeiroLugar, "Sonic the hedgehog");
-        setColocacao(segundoLugar, "Sonic the hedgehog");
-        setColocacao(terceiroLugar, "Sonic the hedgehog");
         eventosTextArea = new JTextArea();
         statusTextArea = new JTextArea();
 
@@ -72,6 +103,8 @@ public class CorridaView extends JFrame {
         
         scrollEventosTextArea = new JScrollPane(eventosTextArea);
         scrollStatusTextArea = new JScrollPane(statusTextArea);
+        
+        
         //Configurações da Janela/Frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -124,12 +157,6 @@ public class CorridaView extends JFrame {
     
         
         add(panel);
-    }
-
-    public static void fillTextArea(ArrayList<String> data, JTextArea textArea) {
-        for (String a : data) {
-            textArea.append(a + "\n");
-        }
     }
 
     //---------------Declaração de Variáveis---------------// 
