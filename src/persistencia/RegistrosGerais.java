@@ -37,9 +37,35 @@ public class RegistrosGerais {
     ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getRegistrosCarros()).getCarrosOrdenadosColocacao();
     ArrayList<Carro> listaNomesCarros = new ArrayList<>();
     for(Carro carro : listaCarrosOrdenados)
+      listaNomesCarros.add(carro.clone());
+    return listaNomesCarros;
+  }
+  
+  public ArrayList<Carro> getListaCarrosVencedoresOrdenadosColocacao() throws CloneNotSupportedException {
+    ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getRegistrosCarros()).getCarrosOrdenadosColocacao();
+    ArrayList<Carro> listaNomesCarros = new ArrayList<>();
+    for(Carro carro : listaCarrosOrdenados)
       if(carro.isEmFuncionamento())
         listaNomesCarros.add(carro.clone());
     return listaNomesCarros;
+  }
+  
+  public ArrayList<String> getListaStringCarrosOrdenadosColocacao() throws CloneNotSupportedException {
+    ArrayList<Carro> listaCarrosOrdenados = getListaCarrosOrdenadosColocacao();
+    ArrayList<String> listaStatusString = new ArrayList<>();
+    int tam = listaCarrosOrdenados.size();
+    int i = 0;
+    for(; i < tam; i++){
+      Carro car = listaCarrosOrdenados.get(i);
+      if(car.isEmFuncionamento())
+        listaStatusString.add((i+1)+"º LUGAR: "+car.getNome()+"\n");
+      else break;
+    }
+    for(; i < tam; i++){
+      Carro car = listaCarrosOrdenados.get(i);
+      listaStatusString.add(car.getNome()+": QUEBROU. Completou "+car.getVoltasPercorridas()+" voltas e percorreu "+car.getDistanciaPercorrida(tam)+" km\n");
+    }
+    return listaStatusString;
   }
   
 //  public void imprimirPosicoes() throws CloneNotSupportedException {
