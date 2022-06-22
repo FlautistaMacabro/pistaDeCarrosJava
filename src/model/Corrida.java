@@ -65,12 +65,13 @@ public class Corrida {
       RegistrosVoltas registrosVoltas = getRegistrosVoltas();
       int voltaAtual = getVoltaAtual();
       int voltasPercorridasCarro = carro.getVoltasPercorridas()+1;
-      Volta voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltasPercorridasCarro);
+      ArrayList<Volta> listaVoltas = registrosVoltas.getListaVoltasClone();
+      Volta voltaRegistro = listaVoltas.get(voltasPercorridasCarro-1);
       if((voltasPercorridasCarro) > voltaAtual){
         registroEventosNaVolta(carro);
         if(voltasPercorridasCarro <= registrosVoltas.getQuantVoltas()){
           setVoltaAtual(voltasPercorridasCarro);
-          voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-1);
+          voltaRegistro = listaVoltas.get(voltaAtual-1);
         }
       }
       voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+(voltasPercorridasCarro)+"º VOLTA!\n");
