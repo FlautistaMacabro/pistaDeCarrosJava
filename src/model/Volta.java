@@ -41,8 +41,19 @@ public class Volta {
     return carrosListaClone;
   }
   
-  public ArrayList<Carro> getListaCarrosNoPodioClone() throws CloneNotSupportedException {
+  public ArrayList<Carro> getListaCarrosNoPodioClone() {
     var listaCarros = getListaCarrosNoPodio();
+    if(listaCarros.size() < 3){
+      Carro inexistente = new Carro(-1, "Inexistente");
+      listaCarros.add(inexistente);
+      while(listaCarros.size() < 3)
+        listaCarros.add(inexistente);
+    }
+    return listaCarros;
+  }
+  
+  public ArrayList<Carro> getListaCarrosNoPodioRealClone() throws CloneNotSupportedException {
+    var listaCarros = getListaCarrosNoPodioClone();
     ArrayList<Carro> carrosListaClone = new ArrayList(listaCarros.size());
     for(Carro car : listaCarros){
       carrosListaClone.add(car.clone());
@@ -78,7 +89,7 @@ public class Volta {
     return listaCarrosQuebraram;
   }
 
-  private ArrayList<Carro> getListaCarrosNoPodio() {
+  public ArrayList<Carro> getListaCarrosNoPodio() {
     return listaCarrosNoPodio;
   }
   

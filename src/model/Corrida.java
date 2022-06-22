@@ -89,10 +89,12 @@ public class Corrida {
       RegistrosCarros acessoAosCarros = getRegistrosCarros();
       int colocacao = getPosicaoDisputada();
       int voltaAtual = getVoltaAtual();
+      Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(voltaAtual-1);
       carro.setColocacao(colocacao);
+      if(colocacao > 0 && colocacao < 4)
+        voltaRegistro.getListaCarrosNoPodioClone().set(colocacao-1, carro);
       setPosicaoDisputada(colocacao+1);
       acessoAosCarros.removerCarroDaCorrida(carro);
-      Volta voltaRegistro = getRegistrosVoltas().getListaVoltasClone().get(voltaAtual-1);
       voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" CRUZOU A LINHA DE CHEGADA !!!\n");
 //      String fraseColocacao = "";
 //      switch(colocacao){
@@ -113,8 +115,9 @@ public class Corrida {
     ArrayList<Carro> listaCarros = getRegistrosCarros().getListaDeCarrosRealClone();
     // Primeiro lugar
     voltaRegistro.addListaCarrosNoPodio(carro);
-    Carro segundo = new Carro(-2, "");
-    Carro terceiro = new Carro(-3, "");
+    Carro inexistente = new Carro(-1, "Inexistente");
+    Carro segundo = inexistente;
+    Carro terceiro = inexistente;
     int tamanhoPista = getTamanhoPista();
     for(Carro car : listaCarros){
       if(!car.isEmFuncionamento())
@@ -127,6 +130,8 @@ public class Corrida {
         }
       }
     }
+    if(segundo.getId_carro() == terceiro.getId_carro())
+      terceiro = inexistente;
     voltaRegistro.addListaCarrosNoPodio(segundo);
     voltaRegistro.addListaCarrosNoPodio(terceiro);
   }

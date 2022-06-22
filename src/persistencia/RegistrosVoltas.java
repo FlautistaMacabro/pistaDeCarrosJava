@@ -48,7 +48,7 @@ public class RegistrosVoltas {
   
   public ArrayList<Carro> getPodioFinalCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
-    return listaVoltasAux.get(getQuantVoltas()-1).getListaCarrosNoPodioClone();
+    return listaVoltasAux.get(getQuantVoltas()-1).getListaCarrosNoPodioRealClone();
   }
   
   public ArrayList<Carro> getCarrosAbasteceramTodaCorrida() throws CloneNotSupportedException {

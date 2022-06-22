@@ -51,7 +51,7 @@ public class CorridaController {
                 
               
                 try {
-                    Carro carro = corridaRegistrada.getListaCarrosOrdenadosColocacao().get(posicao);
+                    Carro carro = corridaRegistrada.getCorrida().getRegistrosVoltas().getPodioFinalCorrida().get(posicao);
                     
                     JLabel podio = (JLabel)component;
                     podio.setFont(new Font("Arial", Font.PLAIN, 12));
