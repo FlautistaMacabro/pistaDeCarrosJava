@@ -63,17 +63,18 @@ public class Corrida {
       carro.subtrairKilometrosDaVolta(tamanhoVolta);
       carro.somarUmaVolta();
       RegistrosVoltas registrosVoltas = getRegistrosVoltas();
-      Volta voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-1);
-      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+voltaAtual+"º VOLTA!\n");
-      int voltasPercorridasCarro = carro.getVoltasPercorridas()+1;
       int voltaAtual = getVoltaAtual();
-//  Mensagem de VOLTA REALIZADA
-//      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
+      int voltasPercorridasCarro = carro.getVoltasPercorridas()+1;
+      Volta voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-1);
       if((voltasPercorridasCarro) > voltaAtual){
         registroEventosNaVolta(carro);
         if(voltasPercorridasCarro <= registrosVoltas.getQuantVoltas())
           setVoltaAtual(voltasPercorridasCarro);
+        voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-2);
       }
+      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+voltaAtual+"º VOLTA!\n");
+//  Mensagem de VOLTA REALIZADA
+//      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       return true;
     }
     return false;

@@ -55,6 +55,7 @@ public class RegistrosGerais {
     ArrayList<String> listaStatusString = new ArrayList<>();
     int tam = listaCarrosOrdenados.size();
     int i = 0;
+    int tamanhoPista = getCorrida().getTamanhoPista();
     for(; i < tam; i++){
       Carro car = listaCarrosOrdenados.get(i);
       if(car.isEmFuncionamento())
@@ -63,7 +64,7 @@ public class RegistrosGerais {
     }
     for(; i < tam; i++){
       Carro car = listaCarrosOrdenados.get(i);
-      listaStatusString.add(car.getNome()+": QUEBROU. Completou "+car.getVoltasPercorridas()+" voltas e percorreu "+car.getDistanciaPercorrida(tam)+" km\n");
+      listaStatusString.add(car.getNome()+": QUEBROU. Completou "+car.getVoltasPercorridas()+" voltas e percorreu "+car.getDistanciaPercorrida(tamanhoPista)+" km\n");
     }
     return listaStatusString;
   }
