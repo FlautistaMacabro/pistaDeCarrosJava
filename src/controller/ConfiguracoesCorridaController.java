@@ -23,7 +23,7 @@ import view.CorridaView;
  * @author lucas
  */
 public class ConfiguracoesCorridaController {
-    private ConfiguracoesCorridaView view;
+    private final ConfiguracoesCorridaView view;
     
     public ConfiguracoesCorridaController(ConfiguracoesCorridaView view){
         this.view = view;
@@ -39,10 +39,10 @@ public class ConfiguracoesCorridaController {
     
     private void iniciarCorrida(int numCarros, int numVoltas, int probaQuebrar, int probaAbastecer) throws CloneNotSupportedException {
         RegistrosGerais corridaRegistrada = new RegistrosGerais(numCarros, numVoltas, probaQuebrar, probaAbastecer);
-        CorridaView view = new CorridaView();
-        CorridaController controller = new CorridaController(view,corridaRegistrada);
+        CorridaView viewCorrida = new CorridaView();
+        CorridaController controllerCorrida = new CorridaController(viewCorrida,corridaRegistrada);
                 
-        view.setVisible(true);
+        viewCorrida.setVisible(true);
     }
             
             
@@ -50,14 +50,14 @@ public class ConfiguracoesCorridaController {
             
     private class JTextFieldInputHandler implements KeyListener{
         
-        private int tam;
+        private final int tam;
         
         public JTextFieldInputHandler(int tam){
             this.tam = tam;
         }
         
         public static String maxLength(String entrada, int tamanho) {
-            StringBuffer saida = new StringBuffer();
+            StringBuilder saida = new StringBuilder();
             char[] caracteres = removeCaracters(entrada).toCharArray();
             for (int i = 0; i < caracteres.length && i <= tamanho; i++) {
                 saida.append(caracteres[i]);
@@ -68,7 +68,7 @@ public class ConfiguracoesCorridaController {
         public static String removeCaracters(String entrada) {
             Pattern numericos = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE);
             Matcher encaixe = numericos.matcher(entrada);
-            StringBuffer saida = new StringBuffer();
+            StringBuilder saida = new StringBuilder();
             while (encaixe.find()) {
                 saida.append(encaixe.group());
             }

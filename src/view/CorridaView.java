@@ -6,10 +6,8 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -17,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  *
@@ -26,7 +23,7 @@ import javax.swing.JTextField;
 public class CorridaView extends JFrame {
 
     public CorridaView() {
-        super("Corrida");
+        super("Resultados da Corrida");
         initComponents();
     }
     
@@ -45,6 +42,10 @@ public class CorridaView extends JFrame {
     
     
     //--------------- Getters ---------------// 
+    public JTextArea getEventosTextArea(){
+        return eventosTextArea;
+    }
+     
     public JTextArea getStatusTextArea(){
         return statusTextArea;
     }
@@ -63,6 +64,10 @@ public class CorridaView extends JFrame {
     
     
     //--------------- Listeners ---------------//
+    public void addEventosJTextAreaListener(HierarchyListener h) {
+       eventosTextArea.addHierarchyListener(h);
+    }
+     
     public void addStatusCarrosJTextAreaListener(HierarchyListener h) {
        statusTextArea.addHierarchyListener(h);
     }
@@ -107,7 +112,7 @@ public class CorridaView extends JFrame {
         
         //Configurações da Janela/Frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
 
         //Layout e Panel
@@ -120,11 +125,7 @@ public class CorridaView extends JFrame {
         scrollStatusTextArea.setPreferredSize(new Dimension(200,100));
         
         
-        ArrayList<String> data = new ArrayList<>(Arrays.asList("London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York", "London", "Tokyo", "New York"));
-        fillTextArea(data, eventosTextArea);
-        
         //Outros componentes
-        
         eventosLabel.setFont(new Font("Arial", Font.BOLD, 14));
         statusCarrosLabel.setFont(new Font("Arial", Font.BOLD, 14));
         podioLabel.setFont(new Font("Arial", Font.BOLD, 14));

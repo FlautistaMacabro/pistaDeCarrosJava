@@ -20,14 +20,15 @@ import view.CorridaView;
  * @author lucas
  */
 public class CorridaController {
-    private CorridaView view;
-    private RegistrosGerais corridaRegistrada;
+    private final CorridaView view;
+    private final RegistrosGerais corridaRegistrada;
     
     public CorridaController(CorridaView view, RegistrosGerais corridaRegistrada){
         this.view = view;
         this.corridaRegistrada = corridaRegistrada;
         
         view.addStatusCarrosJTextAreaListener(new StatusCarrosJTextAreaHandler());
+        view.addEventosJTextAreaListener(new EventosJTextAreaHandler());
         view.addPrimeiroLugarJLabelListener(new PodioJLabelHandler(0));
         view.addSegundoLugarJLabelListener(new PodioJLabelHandler(1));
         view.addTerceiroLugarJLabelListener(new PodioJLabelHandler(2));
@@ -35,7 +36,7 @@ public class CorridaController {
     
     private class PodioJLabelHandler implements HierarchyListener {
         
-        private int posicao;
+        private final int posicao;
         
         public PodioJLabelHandler(int posicao){
             this.posicao = posicao;
@@ -70,10 +71,8 @@ public class CorridaController {
         }
     }
     
-    
-        private class StatusCarrosJTextAreaHandler implements HierarchyListener {
+    private class EventosJTextAreaHandler implements HierarchyListener {
         
-
         @Override
         public void hierarchyChanged(HierarchyEvent e){
             JComponent component = (JComponent) e.getSource();
@@ -81,11 +80,30 @@ public class CorridaController {
             if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
                     && component.isShowing()) {
 
+                CorridaView.fillTextArea(corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida(), view.getEventosTextArea());
+                
+            }
+
+        }
+    }
+    
+    
+    private class StatusCarrosJTextAreaHandler implements HierarchyListener {
+        
+        @Override
+        public void hierarchyChanged(HierarchyEvent e){
+            JComponent component = (JComponent) e.getSource();
+
+            if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
+                    && component.isShowing()) {
+
+                
                 try {
                     CorridaView.fillTextArea(corridaRegistrada.getListaStringCarrosOrdenadosColocacao(), view.getStatusTextArea());
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 
             }
 
