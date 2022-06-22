@@ -3,14 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/main/Main.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/persistencia/RegistrosGerais.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/model/Volta.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/model/Corrida.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/persistencia/RegistrosCarros.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/model/Carro.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/persistencia/RegistrosVoltas.java</file>
-            <file>file:/C:/Users/vinip/OneDrive%20-%20Unesp/Disciplina%20de%20Java/Trabalho%201/trabalho1_ITJ/src/view/ConfiguracoesCorridaView.java</file>
+            <file>file:/C:/Users/mathe/Desktop/pistaDeCarrosJava/src/view/CorridaView.java</file>
+            <file>file:/C:/Users/mathe/Desktop/pistaDeCarrosJava/src/view/ConfiguracoesCorridaView.java</file>
+            <file>file:/C:/Users/mathe/Desktop/pistaDeCarrosJava/src/controller/ConfiguracoesCorridaController.java</file>
         </group>
     </open-files>
 </project-private>

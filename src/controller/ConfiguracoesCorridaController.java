@@ -28,10 +28,10 @@ public class ConfiguracoesCorridaController {
     public ConfiguracoesCorridaController(ConfiguracoesCorridaView view){
         this.view = view;
         
-        view.addNumeroCarrosListener(new JTextFieldInputHandler(1));
-        view.addNumeroVoltasListener(new JTextFieldInputHandler(1));
-        view.addProbabilidadeQuebraListener(new JTextFieldInputHandler(2));
-        view.addProbabilidadeAbastecimentoListener(new JTextFieldInputHandler(2));
+        view.addNumeroCarrosListener(new JTextFieldInputHandler(1,"[0-9]"));
+        view.addNumeroVoltasListener(new JTextFieldInputHandler(1,"[0-9]"));
+        view.addProbabilidadeQuebraListener(new JTextFieldInputHandler(3,"([0-9]+([.][0-9]*)?|[.][0-9]+)"));
+        view.addProbabilidadeAbastecimentoListener(new JTextFieldInputHandler(3,"([0-9]+([.][0-9]*)?|[.][0-9]+)"));
         view.addButtonListener(new IniciarCorridaButtonHandler());
     }
     
@@ -51,22 +51,25 @@ public class ConfiguracoesCorridaController {
     private class JTextFieldInputHandler implements KeyListener{
         
         private final int tam;
+        private final String pattern;
         
-        public JTextFieldInputHandler(int tam){
+        public JTextFieldInputHandler(int tam, String pattern){
             this.tam = tam;
+            this.pattern = pattern;
         }
         
-        public static String maxLength(String entrada, int tamanho) {
+        public String maxLength(String entrada, int tamanho) {
+            String patternAux = pattern;
             StringBuilder saida = new StringBuilder();
-            char[] caracteres = removeCaracters(entrada).toCharArray();
+            char[] caracteres = removeCaracters(entrada,pattern).toCharArray();
             for (int i = 0; i < caracteres.length && i <= tamanho; i++) {
                 saida.append(caracteres[i]);
             }
             return saida.toString();
         }
 
-        public static String removeCaracters(String entrada) {
-            Pattern numericos = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE);
+        public String removeCaracters(String entrada, String pattern) {
+            Pattern numericos = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
             Matcher encaixe = numericos.matcher(entrada);
             StringBuilder saida = new StringBuilder();
             while (encaixe.find()) {
