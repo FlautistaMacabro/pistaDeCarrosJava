@@ -74,7 +74,7 @@ public class Corrida {
           voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-2);
         }
       }
-      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+voltaAtual+"º VOLTA!\n");
+      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+(voltaAtual-1)+"º VOLTA!\n");
 //  Mensagem de VOLTA REALIZADA
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       return true;
