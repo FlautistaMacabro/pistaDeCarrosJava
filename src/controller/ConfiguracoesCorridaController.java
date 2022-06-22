@@ -37,7 +37,7 @@ public class ConfiguracoesCorridaController {
     
     //------------------------------- Métodos -------------------------------//
     
-    private void iniciarCorrida(int numCarros, int numVoltas, int probaQuebrar, int probaAbastecer) throws CloneNotSupportedException {
+    private void iniciarCorrida(int numCarros, int numVoltas, float probaQuebrar, float probaAbastecer) throws CloneNotSupportedException {
         RegistrosGerais corridaRegistrada = new RegistrosGerais(numCarros, numVoltas, probaQuebrar, probaAbastecer);
         CorridaView viewCorrida = new CorridaView();
         CorridaController controllerCorrida = new CorridaController(viewCorrida,corridaRegistrada);
@@ -110,8 +110,8 @@ public class ConfiguracoesCorridaController {
             
             int numCarros = 0;
             int numVoltas = 0;
-            int probaQuebrar = 0;
-            int probaAbastecimento = 0;
+            float probaQuebrar = 0;
+            float probaAbastecimento = 0;
 
             if (numeroCarros.isBlank() || numeroVoltas.isBlank() || probabilidadeQuebra.isBlank() || probabilidadeAbastecimento.isBlank()) {
                 JOptionPane.showMessageDialog(null, "Erro! Alguns dos campos estão vazios", "Error", 0);
@@ -121,8 +121,14 @@ public class ConfiguracoesCorridaController {
             try {
                 numCarros = Integer.parseInt(numeroCarros);
                 numVoltas = Integer.parseInt(numeroVoltas);
-                probaQuebrar = Integer.parseInt(probabilidadeQuebra);
-                probaAbastecimento = Integer.parseInt(probabilidadeAbastecimento);
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(null, "Erro! Os valores inseridos nos campos estão incorretos.", "Error", 0);
+                return;
+            }
+            
+            try {
+                 probaQuebrar = Float.parseFloat(probabilidadeQuebra);
+                 probaAbastecimento = Float.parseFloat(probabilidadeAbastecimento);
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(null, "Erro! Os valores inseridos nos campos estão incorretos.", "Error", 0);
                 return;
