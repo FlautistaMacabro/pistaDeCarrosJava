@@ -15,7 +15,7 @@ import model.Corrida;
 public class RegistrosGerais {
   private Corrida corrida;
 
-  public RegistrosGerais(int quantCarros, int voltas, float probQuebra, float probAbastecimento) throws CloneNotSupportedException {
+  public RegistrosGerais(int quantCarros, int voltas, float probQuebra, float probAbastecimento) throws CloneNotSupportedException, InterruptedException {
     Corrida corridaAux = new Corrida(quantCarros, voltas, probQuebra, probAbastecimento);
     setCorrida(corridaAux);
     realizarCorrida();
@@ -29,7 +29,7 @@ public class RegistrosGerais {
     this.corrida = corrida;
   }
   
-  private void realizarCorrida() throws CloneNotSupportedException{
+  private void realizarCorrida() throws CloneNotSupportedException, InterruptedException{
     getCorrida().iniciarCorrida();
   }
   
@@ -44,9 +44,13 @@ public class RegistrosGerais {
   public ArrayList<Carro> getListaCarrosVencedoresOrdenadosColocacao() throws CloneNotSupportedException {
     ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getRegistrosCarros()).getCarrosOrdenadosColocacao();
     ArrayList<Carro> listaNomesCarros = new ArrayList<>();
+    Carro inexistente = new Carro(-1, "Inexistente");
     for(Carro carro : listaCarrosOrdenados)
       if(carro.isEmFuncionamento())
         listaNomesCarros.add(carro.clone());
+    int i = listaNomesCarros.size();
+    for (; i < 3; i++)
+      listaNomesCarros.add(inexistente);
     return listaNomesCarros;
   }
   

@@ -8,6 +8,7 @@ import persistencia.RegistrosCarros;
 import persistencia.RegistrosVoltas;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Phaser;
 
 /**
  *
@@ -38,16 +39,32 @@ public class Corrida {
     setPosicaoDisputada(1);
   }
   
-  public void iniciarCorrida() throws CloneNotSupportedException{
-    while(continuarCorrida())
-      realizaAcaoDoCarro();
+  public void iniciarCorrida() throws CloneNotSupportedException, InterruptedException{
+    darALargada();
+    while(continuarCorrida()){}
+  }
+  
+  private void darALargada() throws InterruptedException {
+    Phaser phaser = new Phaser();
+    phaser.register();
+    RegistrosCarros acessoAosCarros = getRegistrosCarros();
+    ArrayList<Carro> listaCarros = acessoAosCarros.getListaDeCarrosClone();
+    ArrayList<CarroEmCorrida> listaThreads = new ArrayList<>();
+    for(var carro : listaCarros){
+      var thread = new CarroEmCorrida(carro, this, phaser);
+      listaThreads.add(thread);
+      thread.start();
+    }
+    phaser.arriveAndAwaitAdvance();
+    for(var thread : listaThreads)
+      thread.join();
   }
   
   public boolean continuarCorrida(){
     return (getRegistrosCarros().quantIDsPossiveisCarro() > 0);
   }
   
-  public boolean verificarEstadoGeralDoCarro(Carro carro) throws CloneNotSupportedException{
+  /*public boolean verificarEstadoGeralDoCarro(Carro carro) throws CloneNotSupportedException{
     if(verificaCarroDeuVolta(carro)){
       if(verificaCarroVenceu(carro))
         return true;
@@ -151,7 +168,7 @@ public class Corrida {
         voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" ABASTECEU! Ele teve que esperar o pit stop.\n");
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
-  }
+  }*/
   
   public boolean calculaQuebra(){
     return calculaProbabilidade(getProbQuebra());
@@ -166,13 +183,13 @@ public class Corrida {
     return rand.nextInt((int) (100/porcentagem))==0;
   }
   
-  public Carro realizaAcaoDoCarro() throws CloneNotSupportedException {
-    var carroSorteado = escolheCarroParaAcao();
+  /*public Carro realizaAcaoDoCarro() throws CloneNotSupportedException {
+    var carroSorteado = escolheCarroParaLargar();
     if(carroSorteado == null)
       return null;
     while(!carroSorteado.isComCombustivel()){
       carroSorteado.setComCombustivel(true);
-      carroSorteado = escolheCarroParaAcao();
+      carroSorteado = escolheCarroParaLargar();
     }
     carroSorteado.somarKilometrosRodados(kilometrosPercorridos());
     if(verificarEstadoGeralDoCarro(carroSorteado))
@@ -180,7 +197,7 @@ public class Corrida {
     return null;
   }
  
-  public Carro escolheCarroParaAcao() {
+  public Carro escolheCarroParaLargar() {
     RegistrosCarros acessoAosCarros = getRegistrosCarros();
     Integer idSorteado = acessoAosCarros.idCarroParaCorrida();
     if(idSorteado == -1)
@@ -190,7 +207,7 @@ public class Corrida {
       if(car.getId_carro() == idSorteado)
         return car;
     return null;
-  }
+  }*/
   
   public int kilometrosPercorridos(){
     int minimoKilometros = 1;
@@ -242,7 +259,7 @@ public class Corrida {
     return registrosVoltas;
   }
 
-  private void setPosicaoDisputada(int posicaoDisputada) {
+  final void setPosicaoDisputada(int posicaoDisputada) {
     this.posicaoDisputada = posicaoDisputada;
   }
 

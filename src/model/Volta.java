@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  *
  * @author vinip
- */ // colo kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+ */
 public class Volta {
   private final ArrayList<String> listaEventosGerais;
   private final ArrayList<Carro> listaAbastecimentosCarros;
