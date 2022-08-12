@@ -39,7 +39,7 @@ public class ConfiguracoesCorridaController {
     
     private void iniciarCorrida(int numCarros, int numVoltas, float probaQuebrar, float probaAbastecer) throws CloneNotSupportedException, InterruptedException {
         RegistrosGerais corridaRegistrada = new RegistrosGerais(numCarros, numVoltas, probaQuebrar, probaAbastecer);
-        CorridaView viewCorrida = new CorridaView(numCarros);
+        CorridaView viewCorrida = new CorridaView(numCarros, numVoltas);
         CorridaController controllerCorrida = new CorridaController(viewCorrida,corridaRegistrada);
                 
         viewCorrida.setVisible(true);
