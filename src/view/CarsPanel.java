@@ -28,20 +28,23 @@ public class CarsPanel extends JPanel {
     private ArrayList<CarsDisplay> listaDeCarros;
     private int locationX;
     private int locationY;
+    private int numberOfCars;
+    private int numberOfLaps;
     private final int distanciaEntrePista = 15;
     private final int alturaPista = 30;
     private JButton button;
     private ArrayList<CarsDisplay> vencedores;
 
-    CarsPanel(int numberOfCars/*, int carLaps*/, int locationX, int locationY, JButton button) {
+    CarsPanel(int numberOfCars, int numberOfLaps, int locationX, int locationY, JButton button) {
         this.listaDeCarros = new ArrayList<>();
         this.locationX = locationX;
         this.locationY = locationY;
         this.button = button;
-
+        this.numberOfCars = numberOfCars;
+        this.numberOfLaps = numberOfLaps;
         for (int i = 0; i < numberOfCars; i++) {
             this.listaDeCarros.add(new CarsDisplay(this.locationX,
-                    this.locationY + (i + 1) * (alturaPista + distanciaEntrePista), i + 1));
+                    this.locationY + (i + 1) * (alturaPista + distanciaEntrePista), i + 1, numberOfLaps));
         }
 
         this.vencedores = new ArrayList<>();

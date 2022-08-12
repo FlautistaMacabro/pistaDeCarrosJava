@@ -26,19 +26,21 @@ public class CarsDisplay{
     private int percursoCarro;
     private int numeroDoCarro;
     private int voltasDoCarro;
-    private int racingLaps = 6;
+    private int numberOfLaps;
     private int avancoPorVolta;
     private String statusCarro;
     private JLabel labelStatus;
     private JLabel labelVolta;
+    private static int idCarro = 0;
 
-    CarsDisplay(int locationX, int locationY, int carNumber/*, int racingLaps */) {
+    CarsDisplay(int locationX, int locationY, int carNumber, int numberOfLaps) {
         this.locationX = locationX;
         this.locationY = locationY;
         this.numeroDoCarro = carNumber;
         this.percursoCarro = 0;
         this.voltasDoCarro = 0;
-        this.avancoPorVolta = 1000/this.racingLaps;
+        this.numberOfLaps = numberOfLaps;
+        this.avancoPorVolta = 1000/this.numberOfLaps;
 
         this.labelVolta = new JLabel("Volta: ");
 
@@ -74,7 +76,7 @@ public class CarsDisplay{
         g.fillRect(this.getLocationX(), this.getLocationY() + 5, 1000, 2);
          g.fillRect(this.getLocationX(), this.getLocationY(), 1, 5);
         int size = avancoPorVolta;
-        for(int i = 0; i <= this.racingLaps+1; i++){
+        for(int i = 0; i < this.numberOfLaps; i++){
             g.fillRect(this.getLocationX() + size, this.getLocationY(), 1, 5);
             size += avancoPorVolta;
         }
