@@ -37,7 +37,7 @@ public class ConfiguracoesCorridaController {
     
     //------------------------------- Métodos -------------------------------//
     
-    private void iniciarCorrida(int numCarros, int numVoltas, float probaQuebrar, float probaAbastecer) throws CloneNotSupportedException {
+    private void iniciarCorrida(int numCarros, int numVoltas, float probaQuebrar, float probaAbastecer) throws CloneNotSupportedException, InterruptedException {
         RegistrosGerais corridaRegistrada = new RegistrosGerais(numCarros, numVoltas, probaQuebrar, probaAbastecer);
         CorridaView viewCorrida = new CorridaView();
         CorridaController controllerCorrida = new CorridaController(viewCorrida,corridaRegistrada);
@@ -146,6 +146,8 @@ public class ConfiguracoesCorridaController {
                 try {
                     iniciarCorrida(numCarros,numVoltas,probaQuebrar,probaAbastecimento);
                 } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(ConfiguracoesCorridaController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
                     Logger.getLogger(ConfiguracoesCorridaController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
