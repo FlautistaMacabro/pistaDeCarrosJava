@@ -142,11 +142,8 @@ public class CorridaView extends JFrame {
         //Layout e Panel
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         container1.setLayout(new BoxLayout(container1, BoxLayout.Y_AXIS));
-        container1.setBorder(BorderFactory.createLineBorder(Color.red));
         container4.setLayout(new BoxLayout(container4, BoxLayout.Y_AXIS));
-        container4.setBorder(BorderFactory.createLineBorder(Color.red));
         container3.setLayout(new BoxLayout(container3, BoxLayout.Y_AXIS));
-        container3.setBorder(BorderFactory.createLineBorder(Color.red));
 
         scrollEventosTextArea.setMaximumSize(new Dimension(500, 500));
         scrollStatusTextArea.setPreferredSize(new Dimension(100, 100));
@@ -164,7 +161,6 @@ public class CorridaView extends JFrame {
         container1.add(Box.createRigidArea(new Dimension(0, 40)));
         button = new JButton("Iniciar Corrida");
         container2 = new CarsPanel(numberOfCars, 50, 100, button);
-        container2.setBorder(BorderFactory.createLineBorder(Color.red));
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
         container1.add(button);

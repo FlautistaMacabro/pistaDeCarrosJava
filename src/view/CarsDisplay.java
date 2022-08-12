@@ -26,26 +26,36 @@ public class CarsDisplay{
     private int percursoCarro;
     private int numeroDoCarro;
     private int voltasDoCarro;
+    private int racingLaps = 6;
+    private int avancoPorVolta;
+    private String statusCarro;
+    private JLabel labelStatus;
     private JLabel labelVolta;
 
-    CarsDisplay(int locationX, int locationY, int carNumber) {
+    CarsDisplay(int locationX, int locationY, int carNumber/*, int racingLaps */) {
         this.locationX = locationX;
         this.locationY = locationY;
         this.numeroDoCarro = carNumber;
         this.percursoCarro = 0;
         this.voltasDoCarro = 0;
+        this.avancoPorVolta = 1000/this.racingLaps;
 
         this.labelVolta = new JLabel("Volta: ");
 
         this.labelVolta.setVisible(true);
 
         this.labelVolta.setLocation(this.locationX, this.locationY + 10);
+        
+        
+        
+        this.labelStatus = new JLabel("Status: ");
 
+        this.labelStatus.setVisible(true);
+
+        this.labelStatus.setLocation(this.locationX+100, this.locationY + 10);
+        
     }
 
-    public int getRandom(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
     public void drawCar(Graphics g, int positionX, int positionY) {
         BufferedImage image;
         try {
@@ -55,33 +65,33 @@ public class CarsDisplay{
         }
         g.drawImage(image, (locationX + this.percursoCarro), locationY, null);
     }
+    
     public void paintDisplay(Graphics g) {
         g.drawString("Volta: " + this.getVoltasDoCarro(), this.locationX, this.locationY);
+        g.drawString("Status: " + this.getStatusCarro(), this.locationX + 100, this.locationY);
+        g.drawString("Carro: " + this.numeroDoCarro, this.locationX + 200, this.locationY);
         this.drawCar(g, locationX, locationY);
         g.fillRect(this.getLocationX(), this.getLocationY() + 5, 1000, 2);
-        g.fillRect(this.getLocationX(), this.getLocationY(), 1, 10);
-        g.fillRect(this.getLocationX() + 100, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 200, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 300, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 400, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 500, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 600, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 700, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 800, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 900, this.getLocationY(), 1, 5);
-        g.fillRect(this.getLocationX() + 1000, this.getLocationY(), 1, 10);
-
+         g.fillRect(this.getLocationX(), this.getLocationY(), 1, 5);
+        int size = avancoPorVolta;
+        for(int i = 0; i <= this.racingLaps+1; i++){
+            g.fillRect(this.getLocationX() + size, this.getLocationY(), 1, 5);
+            size += avancoPorVolta;
+        }
     }
     
-     public void carMoves()
+      public void moverCarro()
     { 
         if(this.percursoCarro <= 1000)
         {
-        	int moveu = getRandom(0, 3) * 100;
-            this.percursoCarro = this.percursoCarro + moveu;
+            this.voltasDoCarro +=1;
+            this.percursoCarro  +=  avancoPorVolta;
         }
     }
+    
+   
 
+    
     public int getLocationX() {
         return locationX;
     }
@@ -126,5 +136,16 @@ public class CarsDisplay{
         this.voltasDoCarro = voltasDoCarro + 1;
         this.percursoCarro = percursoCarro - 900;
     }
+
+    public String getStatusCarro() {
+        return statusCarro;
+    }
+
+    public void setStatusCarro(String statusCarro) {
+        this.statusCarro = statusCarro;
+    }
+    
+    
+    
 
 }
