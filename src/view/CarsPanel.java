@@ -33,7 +33,7 @@ public class CarsPanel extends JPanel {
     private JButton button;
     private ArrayList<CarsDisplay> vencedores;
 
-    CarsPanel(int numberOfCars, int locationX, int locationY, JButton button) {
+    CarsPanel(int numberOfCars/*, int carLaps*/, int locationX, int locationY, JButton button) {
         this.listaDeCarros = new ArrayList<>();
         this.locationX = locationX;
         this.locationY = locationY;
@@ -56,6 +56,17 @@ public class CarsPanel extends JPanel {
             display.paintDisplay(g);
         }
     }
+    
+    
+    public void moverCarros(int carIndex){
+        listaDeCarros.get(carIndex-1).moverCarro();
+    }
+    
+    
+     public void mudarStatusCarros(int carIndex, String statusMessage){
+        listaDeCarros.get(carIndex-1).setStatusCarro(statusMessage);
+    }
+    
     
      //--------------- Getters ---------------// 
     public ArrayList<CarsDisplay> getListaDeCarros() {
