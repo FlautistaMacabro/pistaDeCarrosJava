@@ -42,7 +42,7 @@ public class CarroEmCorrida extends Thread{
   private void largada() throws CloneNotSupportedException, InterruptedException {
     System.out.println("startou");
     Carro carroBase = getCarroBase();
-    while(carroBase.isEmFuncionamento()){
+    while(carroBase.isEmFuncionamento() && getCorridaAtual().getVoltaAtual() > carroBase.getVoltasPercorridas()){
       System.out.println("loop");
       if(!carroBase.isComCombustivel()){
         Thread.sleep(10);
@@ -88,7 +88,9 @@ public class CarroEmCorrida extends Thread{
           voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-2);
         }
       }
-      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" COMPLETOU A "+(voltasPercorridasCarro-1)+"º VOLTA!\n");
+      String nomeCarro = carro.getNome();
+      voltaRegistro.addListaEventosGerais("O "+nomeCarro+" COMPLETOU A "+(voltasPercorridasCarro-1)+"º VOLTA!\n");
+      voltaRegistro.addListaStatusCarros("AVANÇAR,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
 //  Mensagem de VOLTA REALIZADA
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       return true;
@@ -132,11 +134,13 @@ public class CarroEmCorrida extends Thread{
       int colocacao = corridaAtual.getPosicaoDisputada();
       int voltaAtual = corridaAtual.getVoltaAtual();
       Volta voltaRegistro = corridaAtual.getRegistrosVoltas().getListaVoltasClone().get(voltaAtual-1);
+      String nomeCarro = carro.getNome();
       carro.setColocacao(colocacao);
       if(colocacao > 0 && colocacao < 4)
         voltaRegistro.getListaCarrosNoPodioClone().set(colocacao-1, carro);
       corridaAtual.setPosicaoDisputada(colocacao+1);
-      voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" CRUZOU A LINHA DE CHEGADA !!!\n");
+      voltaRegistro.addListaEventosGerais("O "+nomeCarro+" CRUZOU A LINHA DE CHEGADA !!!\n");
+      voltaRegistro.addListaStatusCarros("TERMINOU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
       acessoAosCarros.removerCarroDaCorrida(carro);
 //      String fraseColocacao = "";
 //      switch(colocacao){
@@ -157,15 +161,19 @@ public class CarroEmCorrida extends Thread{
     var corridaAtual = getCorridaAtual();
     Volta voltaRegistro = corridaAtual.getRegistrosVoltas().getListaVoltasClone().get(corridaAtual.getVoltaAtual()-1);
     if(calculaQuebra()){
+        String nomeCarro = carro.getNome();
         carro.setEmFuncionamento(false);
-        voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" QUEBROU! Infelizmente ele SAIU DA CORRIDA !!\n");
+        voltaRegistro.addListaEventosGerais("O "+nomeCarro+" QUEBROU! Infelizmente ele SAIU DA CORRIDA !!\n");
+        voltaRegistro.addListaStatusCarros("QUEBROU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
         corridaAtual.getRegistrosCarros().removerCarroDaCorrida(carro);
 //        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele esta FORA DA CORRIDA !!\n");
     }
     else if(calculaAbastecimento()){
+        String nomeCarro = carro.getNome();
         carro.setComCombustivel(false);
         voltaRegistro.addListaAbastecimentosCarros(carro);
-        voltaRegistro.addListaEventosGerais("O "+carro.getNome()+" ABASTECEU! Ele teve que esperar o pit stop.\n");
+        voltaRegistro.addListaEventosGerais("O "+nomeCarro+" ABASTECEU! Ele teve que esperar o pit stop.\n");
+        voltaRegistro.addListaStatusCarros("ABASTECEU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
   }

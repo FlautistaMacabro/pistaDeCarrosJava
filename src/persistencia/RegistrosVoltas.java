@@ -46,6 +46,20 @@ public class RegistrosVoltas {
     return listaEventosTodaCorrida;
   }
   
+  public ArrayList<String> getStatusCarrosTodaCorrida() {
+    ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
+    ArrayList<String> listaStatusTodaCorrida = new ArrayList<>();
+    int quantVoltas = getQuantVoltas();
+    for(int i = 0; i < quantVoltas; i++){
+      Volta volta = listaVoltasAux.get(i);
+      ArrayList<String> listaStatus = volta.getListaStatusCarros();
+      listaStatusTodaCorrida.add("\nNOVA VOLTA\n");
+      for(String evento : listaStatus)
+        listaStatusTodaCorrida.add(evento);
+    }
+    return listaStatusTodaCorrida;
+  }
+  
   public ArrayList<Carro> getPodioFinalCorrida() throws CloneNotSupportedException {
     ArrayList<Volta> listaVoltasAux = getListaVoltasClone();
     return listaVoltasAux.get(getQuantVoltas()-1).getListaCarrosNoPodioRealClone();

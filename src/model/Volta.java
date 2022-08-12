@@ -12,12 +12,14 @@ import java.util.ArrayList;
  */
 public class Volta {
   private final ArrayList<String> listaEventosGerais;
+  private final ArrayList<String> listaStatusCarros;
   private final ArrayList<Carro> listaAbastecimentosCarros;
   private final ArrayList<Carro> listaCarrosQuebraram;
   private final ArrayList<Carro> listaCarrosNoPodio;
 
   public Volta() {
     this.listaEventosGerais = new ArrayList<>();
+    this.listaStatusCarros = new ArrayList<>();
     this.listaAbastecimentosCarros = new ArrayList<>();
     this.listaCarrosQuebraram = new ArrayList<>();
     this.listaCarrosNoPodio = new ArrayList<>();
@@ -65,6 +67,10 @@ public class Volta {
     getListaEventosGerais().add(evento);
   }
   
+  public void addListaStatusCarros(String evento) {
+    getListaStatusCarros().add(evento);
+  }
+  
   public void addListaAbastecimentosCarros(Carro carro) throws CloneNotSupportedException {
     getListaAbastecimentosCarros().add(carro.clone());
   }
@@ -79,6 +85,10 @@ public class Volta {
 
   public ArrayList<String> getListaEventosGerais() {
     return listaEventosGerais;
+  }
+  
+  public ArrayList<String> getListaStatusCarros() {
+    return listaStatusCarros;
   }
 
   private ArrayList<Carro> getListaAbastecimentosCarros() {
