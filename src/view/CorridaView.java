@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.CorridaController;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -13,6 +14,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import persistencia.RegistrosGerais;
 
 /**
  *
@@ -30,11 +35,14 @@ import javax.swing.JTextArea;
 public class CorridaView extends JFrame {
     
     private int numberOfCars;
+    private int numberOfLaps;
 
-    public CorridaView(int numberOfCars) {
+
+    public CorridaView(int numberOfCars, int numberOfLaps) {
         super("Resultados da Corrida");
         
         this.numberOfCars = numberOfCars;
+        this.numberOfLaps = numberOfLaps;
         
         initComponents();
     }
