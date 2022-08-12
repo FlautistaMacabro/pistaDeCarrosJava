@@ -5,12 +5,17 @@
 package controller;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import model.Carro;
 import persistencia.RegistrosGerais;
 import view.CorridaView;
@@ -27,14 +32,49 @@ public class CorridaController {
         this.view = view;
         this.corridaRegistrada = corridaRegistrada;
         
-        view.addStatusCarrosJTextAreaListener(new StatusCarrosJTextAreaHandler());
+        view.addButtonListener(new JButtonHandler());
         view.addEventosJTextAreaListener(new EventosJTextAreaHandler());
+        /*view.addStatusCarrosJTextAreaListener(new StatusCarrosJTextAreaHandler());
         view.addPrimeiroLugarJLabelListener(new PodioJLabelHandler(0));
         view.addSegundoLugarJLabelListener(new PodioJLabelHandler(1));
-        view.addTerceiroLugarJLabelListener(new PodioJLabelHandler(2));
+        view.addTerceiroLugarJLabelListener(new PodioJLabelHandler(2));*/
     }
     
-    private class PodioJLabelHandler implements HierarchyListener {
+    private class JButtonHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Iniciando a corrida...");
+            
+            JTextArea textArea = view.getEventosTextArea();
+            
+            ArrayList<String> eventos = corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida();
+            for (String a : eventos) {
+                textArea.append(a + "\n");
+            }
+            
+        }
+
+    }
+    
+    private class EventosJTextAreaHandler implements HierarchyListener {
+        
+        @Override
+        public void hierarchyChanged(HierarchyEvent e){
+            JComponent component = (JComponent) e.getSource();
+
+            if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
+                    && component.isShowing()) {
+
+                CorridaView.addEvent("APERTE O BOTÃO PARA INICIAR A CORRIDA!!!", view.getEventosTextArea());
+                //CorridaView.fillTextArea(corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida(), view.getEventosTextArea());
+                
+            }
+
+        }
+    }
+    
+    /*private class PodioJLabelHandler implements HierarchyListener {
         
         private final int posicao;
         
@@ -69,26 +109,9 @@ public class CorridaController {
             }
 
         }
-    }
+    }*/
     
-    private class EventosJTextAreaHandler implements HierarchyListener {
-        
-        @Override
-        public void hierarchyChanged(HierarchyEvent e){
-            JComponent component = (JComponent) e.getSource();
-
-            if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
-                    && component.isShowing()) {
-
-                CorridaView.fillTextArea(corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida(), view.getEventosTextArea());
-                
-            }
-
-        }
-    }
-    
-    
-    private class StatusCarrosJTextAreaHandler implements HierarchyListener {
+    /*private class StatusCarrosJTextAreaHandler implements HierarchyListener {
         
         @Override
         public void hierarchyChanged(HierarchyEvent e){
@@ -108,6 +131,6 @@ public class CorridaController {
             }
 
         }
-    }
+    }*/
     
 }

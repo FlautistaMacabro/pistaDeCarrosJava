@@ -49,7 +49,7 @@ public class CarsDisplay{
     public void drawCar(Graphics g, int positionX, int positionY) {
         BufferedImage image;
         try {
-            image = ImageIO.read(new File("C:\\Users\\mathe\\Desktop\\pistaDeCarrosJava\\src\\view\\car.png"));
+            image = ImageIO.read(CarsDisplay.class.getResource("/resources/car.png"));
         } catch (IOException e) {
             image = null;
         }

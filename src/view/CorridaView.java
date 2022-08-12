@@ -4,11 +4,16 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.awt.event.HierarchyListener;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,18 +28,27 @@ import javax.swing.JTextArea;
  * @author lucas, matheus
  */
 public class CorridaView extends JFrame {
+    
+    private int numberOfCars;
 
-    public CorridaView() {
+    public CorridaView(int numberOfCars) {
         super("Resultados da Corrida");
+        
+        this.numberOfCars = numberOfCars;
+        
         initComponents();
     }
 
     //--------------- Métodos ---------------// 
-    public static void fillTextArea(ArrayList<String> data, JTextArea textArea) {
+    public static void addEvent(String event, JTextArea textArea) {
+        textArea.append(event + "\n");
+    }
+    
+    /*public static void fillTextArea(ArrayList<String> data, JTextArea textArea) {
         for (String a : data) {
             textArea.append(a + "\n");
         }
-    }
+    }*/
 
     //--------------- Setters ---------------// 
     public void setColocacao(JLabel label, String nome) {
@@ -66,8 +80,12 @@ public class CorridaView extends JFrame {
     public void addEventosJTextAreaListener(HierarchyListener h) {
         eventosTextArea.addHierarchyListener(h);
     }
+    
+    public void addButtonListener(ActionListener a){
+        button.addActionListener(a);
+    }
 
-    public void addStatusCarrosJTextAreaListener(HierarchyListener h) {
+    /*public void addStatusCarrosJTextAreaListener(HierarchyListener h) {
         statusTextArea.addHierarchyListener(h);
     }
 
@@ -81,7 +99,7 @@ public class CorridaView extends JFrame {
 
     public void addTerceiroLugarJLabelListener(HierarchyListener h) {
         terceiroLugar.addHierarchyListener(h);
-    }
+    }*/
 
     //--------------- Inicialização de Componentes ---------------//
     private void initComponents() {
@@ -116,8 +134,11 @@ public class CorridaView extends JFrame {
         //Layout e Panel
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         container1.setLayout(new BoxLayout(container1, BoxLayout.Y_AXIS));
+        container1.setBorder(BorderFactory.createLineBorder(Color.red));
         container4.setLayout(new BoxLayout(container4, BoxLayout.Y_AXIS));
+        container4.setBorder(BorderFactory.createLineBorder(Color.red));
         container3.setLayout(new BoxLayout(container3, BoxLayout.Y_AXIS));
+        container3.setBorder(BorderFactory.createLineBorder(Color.red));
 
         scrollEventosTextArea.setMaximumSize(new Dimension(500, 500));
         scrollStatusTextArea.setPreferredSize(new Dimension(100, 100));
@@ -133,8 +154,9 @@ public class CorridaView extends JFrame {
         container1.add(Box.createRigidArea(new Dimension(0, 10)));
         container1.add(scrollEventosTextArea);
         container1.add(Box.createRigidArea(new Dimension(0, 40)));
-        button = new JButton("vamos rodar");
-        container2 = new CarsPanel(6, 50, 100, button);
+        button = new JButton("Iniciar Corrida");
+        container2 = new CarsPanel(numberOfCars, 50, 100, button);
+        container2.setBorder(BorderFactory.createLineBorder(Color.red));
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
         container1.add(button);

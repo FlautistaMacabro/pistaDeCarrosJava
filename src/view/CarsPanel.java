@@ -45,15 +45,10 @@ public class CarsPanel extends JPanel {
         }
 
         this.vencedores = new ArrayList<>();
-        this.button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("clicou");
-            }
-        });
-
     }
-
+    
+    //--------------- Métodos ---------------// 
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -61,4 +56,10 @@ public class CarsPanel extends JPanel {
             display.paintDisplay(g);
         }
     }
+    
+     //--------------- Getters ---------------// 
+    public ArrayList<CarsDisplay> getListaDeCarros() {
+        return listaDeCarros;
+    }
+    
 }
