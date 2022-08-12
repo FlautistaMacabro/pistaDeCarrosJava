@@ -37,58 +37,94 @@ public class CorridaController {
 
         view.addButtonListener(new JButtonHandler());
         view.addEventosJTextAreaListener(new EventosJTextAreaHandler());
-        /*view.addStatusCarrosJTextAreaListener(new StatusCarrosJTextAreaHandler());
-        view.addPrimeiroLugarJLabelListener(new PodioJLabelHandler(0));
-        view.addSegundoLugarJLabelListener(new PodioJLabelHandler(1));
-        view.addTerceiroLugarJLabelListener(new PodioJLabelHandler(2));*/
     }
-    
-    /*public class UpdateGUIRunnable implements Runnable {
-        private List<String> strsToSet;
-        
-        public MyRunnable(List<String> strsToSet) {
-            this.strsToSet = strsToSet;
+
+    public class UpdateGUIRunnable implements Runnable {
+
+        private ArrayList<String> eventos;
+        private ArrayList<String> comandos;
+        private JTextArea eventosArea;
+
+        public UpdateGUIRunnable(ArrayList<? extends String> eventos, ArrayList<? extends String> comandos, JTextArea eventosArea) {
+            this.eventos = (ArrayList<String>) eventos;
+            this.comandos = (ArrayList<String>) comandos;
+            this.eventosArea = eventosArea;
         }
-        
+
         @Override
         public void run() {
             try {
-                if(strsToSet.size() > 0) {
-                    final String str = strsToSet.get(0);
+                if (!eventos.isEmpty()) {
+                    // Preenchendo o TextField de Eventos
+                    final String str = eventos.remove(0);
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            txtLeadingText.setText(str);
+                            eventosArea.append(str + "\n");
                         }
                     });
-
-                    Thread.sleep(1000);
-                    List<String> newList = new LinkedList<String>(strsToSet);
-                    newList.remove(0);
-                    new Thread(new MyRunnable(newList)).start();
                 }
-            }
-            catch(InterruptedException e) {
+                if (!comandos.isEmpty()) {
+                    // Movendo os carros na interface
+                    final String[] parts = comandos.remove(0).split(",");
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ("\nNOVA VOLTA".equals(parts[0])) {
+                                System.out.println("NOVA VOLTA");
+                            } else if ("AVANÇAR".equals(parts[0])) {
+                                System.out.println("AVANÇAR - " + parts[1]);
+                            } else if ("ABASTECEU".equals(parts[0])) {
+                                System.out.println("ABASTECEU -" + parts[1]);
+                            } else if ("QUEBROU".equals(parts[0])) {
+                                System.out.println("QUEBROU -" + parts[1]);
+                            }
+                        }
+                    });
+                }
+                if (!eventos.isEmpty() && !comandos.isEmpty()) {
+                    Thread.sleep(1000);
+                    new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea)).start();
+                } else {
+                    //Preenchendo o pódio
+                    try {
+                        ArrayList<Carro> carros = corridaRegistrada.getListaCarrosVencedoresOrdenadosColocacao();
+                        ArrayList vencedores = view.getPodio();
+
+                        for (Carro carro : carros) {
+                            JLabel podio = (JLabel) vencedores.remove(0);
+                            podio.setFont(new Font("Arial", Font.PLAIN, 12));
+
+                            if (carro.isEmFuncionamento()) {
+                                view.setColocacao(podio, carro.getNome());
+                            } else {
+                                view.setColocacao(podio, "Inexistente");
+                            }
+                        }
+
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }*/
-    //new Thread(new MyRunnable(Arrays.asList(one, two, three))).start();
+    }
 
     private class JButtonHandler implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           
-            /*System.out.println("Iniciando a corrida...");
 
-            JTextArea textArea = view.getEventosTextArea();
+            System.out.println("Iniciando a corrida...");
+
+            JTextArea eventosArea = view.getEventosTextArea();
 
             ArrayList<String> eventos = corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida();
             ArrayList<String> comandos = corridaRegistrada.getCorrida().getRegistrosVoltas().getStatusCarrosTodaCorrida();
-            
-            
-            new Thread(new UpdateGUIRunnable(Arrays.asList(one, two, three))).start();*/
+
+            new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea)).start();
         }
 
     }
@@ -104,67 +140,8 @@ public class CorridaController {
 
                 CorridaView.addEvent("APERTE O BOTÃO PARA INICIAR A CORRIDA!!!", view.getEventosTextArea());
                 //CorridaView.fillTextArea(corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida(), view.getEventosTextArea());
-
             }
 
         }
     }
-
-    /*private class PodioJLabelHandler implements HierarchyListener {
-        
-        private final int posicao;
-        
-        public PodioJLabelHandler(int posicao){
-            this.posicao = posicao;
-        }
-
-        @Override
-        public void hierarchyChanged(HierarchyEvent e){
-            JComponent component = (JComponent) e.getSource();
-
-            if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
-                    && component.isShowing()) {
-                
-              
-                try {
-                    Carro carro = corridaRegistrada.getListaCarrosVencedoresOrdenadosColocacao().get(posicao);
-                    
-                    JLabel podio = (JLabel)component;
-                    podio.setFont(new Font("Arial", Font.PLAIN, 12));
-                
-                    if(carro.isEmFuncionamento()){
-                        view.setColocacao(podio, carro.getNome());
-                    }
-                    else{
-                        view.setColocacao(podio, "Inexistente");
-                    }
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                 
-            }
-
-        }
-    }*/
- /*private class StatusCarrosJTextAreaHandler implements HierarchyListener {
-        
-        @Override
-        public void hierarchyChanged(HierarchyEvent e){
-            JComponent component = (JComponent) e.getSource();
-
-            if ((HierarchyEvent.SHOWING_CHANGED & e.getChangeFlags()) != 0
-                    && component.isShowing()) {
-
-                
-                try {
-                    CorridaView.fillTextArea(corridaRegistrada.getListaStringCarrosOrdenadosColocacao(), view.getStatusTextArea());
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
-            }
-
-        }
-    }*/
 }

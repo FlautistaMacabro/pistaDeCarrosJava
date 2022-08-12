@@ -83,6 +83,14 @@ public class CorridaView extends JFrame {
     public JLabel getTerceiroLugar() {
         return terceiroLugar;
     }
+    
+    public ArrayList getPodio(){
+        ArrayList podio = new ArrayList();
+        podio.add(getPrimeiroLugar());
+        podio.add(getSegundoLugar());
+        podio.add(getTerceiroLugar());
+        return podio; 
+    }
 
     //--------------- Listeners ---------------//
     public void addEventosJTextAreaListener(HierarchyListener h) {
@@ -92,22 +100,6 @@ public class CorridaView extends JFrame {
     public void addButtonListener(ActionListener a){
         button.addActionListener(a);
     }
-
-    /*public void addStatusCarrosJTextAreaListener(HierarchyListener h) {
-        statusTextArea.addHierarchyListener(h);
-    }
-
-    public void addPrimeiroLugarJLabelListener(HierarchyListener h) {
-        primeiroLugar.addHierarchyListener(h);
-    }
-
-    public void addSegundoLugarJLabelListener(HierarchyListener h) {
-        segundoLugar.addHierarchyListener(h);
-    }
-
-    public void addTerceiroLugarJLabelListener(HierarchyListener h) {
-        terceiroLugar.addHierarchyListener(h);
-    }*/
 
     //--------------- Inicialização de Componentes ---------------//
     private void initComponents() {
