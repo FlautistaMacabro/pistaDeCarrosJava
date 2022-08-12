@@ -8,7 +8,7 @@ import persistencia.RegistrosCarros;
 import persistencia.RegistrosVoltas;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.Phaser;
+import java.util.concurrent.CountDownLatch;
 
 /**
  *
@@ -22,6 +22,8 @@ public class Corrida {
   private float probAbastecimento;
   private final RegistrosCarros armazem;
   private final RegistrosVoltas registrosVoltas;
+  CountDownLatch startSignal;
+  CountDownLatch doneSignal;
 //  private final String frasePrimeiroLugar = "1 (PRIMEIRO)";
 //  private final String fraseSegundoLugar = "2 (SEGUNDO)";
 //  private final String fraseTerceiroLugar = "3 (TERCEIRO)";
@@ -32,6 +34,8 @@ public class Corrida {
       voltas = 11;
     armazem = new RegistrosCarros(quantCarros);
     registrosVoltas = new RegistrosVoltas(voltas);
+    setStartSignal(new CountDownLatch(1));
+    setDoneSignal(new CountDownLatch(quantCarros));
     setVoltaAtual(1);
     setProbQuebra(probQuebra);
     setProbAbastecimento(probAbastecimento);
@@ -41,28 +45,23 @@ public class Corrida {
   
   public void iniciarCorrida() throws CloneNotSupportedException, InterruptedException{
     darALargada();
-    while(continuarCorrida()){}
+    //while(continuarCorrida()){System.out.println("Fim");}
   }
   
   private void darALargada() throws InterruptedException {
-    Phaser phaser = new Phaser();
-    phaser.register();
     RegistrosCarros acessoAosCarros = getRegistrosCarros();
     ArrayList<Carro> listaCarros = acessoAosCarros.getListaDeCarrosClone();
-    ArrayList<CarroEmCorrida> listaThreads = new ArrayList<>();
-    for(var carro : listaCarros){
-      var thread = new CarroEmCorrida(carro, this, phaser);
-      listaThreads.add(thread);
-      thread.start();
-    }
-    phaser.arriveAndAwaitAdvance();
-    for(var thread : listaThreads)
-      thread.join();
+    var startSignal = getStartSignal();
+    var doneSignal = getDoneSignal();
+    for(var carro : listaCarros)
+      (new CarroEmCorrida(carro, this, startSignal, doneSignal)).start();
+    startSignal.countDown();
+    doneSignal.await();
   }
   
-  public boolean continuarCorrida(){
-    return (getRegistrosCarros().quantIDsPossiveisCarro() > 0);
-  }
+  //public boolean continuarCorrida(){
+  //  return (getVoltaAtual() <= getRegistrosVoltas().getQuantVoltas());
+  //}
   
   /*public boolean verificarEstadoGeralDoCarro(Carro carro) throws CloneNotSupportedException{
     if(verificaCarroDeuVolta(carro)){
@@ -274,5 +273,21 @@ public class Corrida {
 //  private String getFraseTerceiroLugar() {
 //    return fraseTerceiroLugar;
 //  }
+
+  public CountDownLatch getStartSignal() {
+    return startSignal;
+  }
+
+  private void setStartSignal(CountDownLatch startSignal) {
+    this.startSignal = startSignal;
+  }
+
+  public CountDownLatch getDoneSignal() {
+    return doneSignal;
+  }
+
+  private void setDoneSignal(CountDownLatch doneSignal) {
+    this.doneSignal = doneSignal;
+  }
   
 }

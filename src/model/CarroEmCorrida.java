@@ -6,7 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.Phaser;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.RegistrosCarros;
@@ -20,11 +20,12 @@ public class CarroEmCorrida extends Thread{
   
   private Corrida corridaAtual;
   private Carro carroBase;
-  private final Phaser phaser;
+  private final CountDownLatch startSignal;
+  private final CountDownLatch doneSignal;
   
-  public CarroEmCorrida(Carro carro, Corrida corrida, Phaser phaser) {
-    this.phaser = phaser;
-    getPhaser().register();
+  public CarroEmCorrida(Carro carro, Corrida corrida, CountDownLatch startSignal, CountDownLatch doneSignal) {
+    this.startSignal = startSignal;
+    this.doneSignal = doneSignal;
     setCarroBase(carro);
     setCorridaAtual(corrida);
   }
@@ -32,8 +33,9 @@ public class CarroEmCorrida extends Thread{
   @Override
   public void run() {
     try {
-      getPhaser().arriveAndAwaitAdvance();
+      getStartSignal().await();
       largada();
+      getDoneSignal().countDown();
     } catch (CloneNotSupportedException | InterruptedException ex) {
       Logger.getLogger(CarroEmCorrida.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -207,8 +209,12 @@ public class CarroEmCorrida extends Thread{
     this.carroBase = carroBase;
   }
 
-  public final Phaser getPhaser() {
-    return phaser;
+  public CountDownLatch getStartSignal() {
+    return startSignal;
+  }
+
+  public CountDownLatch getDoneSignal() {
+    return doneSignal;
   }
   
 }
