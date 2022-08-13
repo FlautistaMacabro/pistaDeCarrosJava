@@ -156,7 +156,7 @@ public class CorridaView extends JFrame {
         container1.add(scrollEventosTextArea);
         container1.add(Box.createRigidArea(new Dimension(0, 40)));
         button = new JButton("Iniciar Corrida");
-        container2 = new CarsPanel(numberOfCars, 50, 100, button);
+        container2 = new CarsPanel(numberOfCars,numberOfLaps, 50, 100, button);
 
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
         container1.add(button);
