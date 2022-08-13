@@ -92,7 +92,7 @@ public class CarroEmCorrida extends Thread{
       }
       String nomeCarro = carro.getNome();
       voltaRegistro.addListaEventosGerais("O "+nomeCarro+" COMPLETOU A "+(voltasPercorridasCarro-1)+"º VOLTA!\n");
-      voltaRegistro.addListaStatusCarros("AVANÇAR,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
+      voltaRegistro.addListaStatusCarros("AVANÇAR,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
 //  Mensagem de VOLTA REALIZADA
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       return true;
@@ -166,7 +166,7 @@ public class CarroEmCorrida extends Thread{
         String nomeCarro = carro.getNome();
         carro.setEmFuncionamento(false);
         voltaRegistro.addListaEventosGerais("O "+nomeCarro+" QUEBROU! Infelizmente ele SAIU DA CORRIDA !!\n");
-        voltaRegistro.addListaStatusCarros("QUEBROU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
+        voltaRegistro.addListaStatusCarros("QUEBROU,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
         corridaAtual.getRegistrosCarros().removerCarroDaCorrida(carro);
 //        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele esta FORA DA CORRIDA !!\n");
     }
@@ -175,7 +175,7 @@ public class CarroEmCorrida extends Thread{
         carro.setComCombustivel(false);
         voltaRegistro.addListaAbastecimentosCarros(carro);
         voltaRegistro.addListaEventosGerais("O "+nomeCarro+" ABASTECEU! Ele teve que esperar o pit stop.\n");
-        voltaRegistro.addListaStatusCarros("ABASTECEU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
+        voltaRegistro.addListaStatusCarros("ABASTECEU,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
   }

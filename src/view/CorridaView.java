@@ -92,7 +92,7 @@ public class CorridaView extends JFrame {
         return podio; 
     }
     
-    public JPanel getCarsPanel(){
+    public CarsPanel getCarsPanel(){
         return container2;
     }
 

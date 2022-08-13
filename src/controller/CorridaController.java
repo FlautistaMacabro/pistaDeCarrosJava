@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import model.Carro;
@@ -64,27 +65,33 @@ public class CorridaController {
                         }
                     });
                 }
+                
+                
                 if (!comandos.isEmpty()) {
                     // Movendo os carros na interface
                     final String[] parts = comandos.remove(0).split(",");
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            //System.out.println("|"+parts[0]+"|");
                             if ("\nNOVA VOLTA\n".equals(parts[0])) {
-                                System.out.println("NOVA VOLTA");
+                                //System.out.println("NOVA VOLTA");
                             } else if ("AVANÇAR".equals(parts[0])) {
-                                System.out.println("AVANÇAR - " + parts[1]);
+                                //System.out.println("AVANÇAR - " + parts[1]);
+                                view.getCarsPanel().moverCarros(Integer.valueOf(parts[1]));
                             } else if ("ABASTECEU".equals(parts[0])) {
-                                System.out.println("ABASTECEU -" + parts[1]);
+                                //System.out.println("ABASTECEU -" + parts[1]);
                             } else if ("QUEBROU".equals(parts[0])) {
-                                System.out.println("QUEBROU -" + parts[1]);
+                                //System.out.println("QUEBROU -" + parts[1]);
+                                view.getCarsPanel().mudarStatusCarros(Integer.valueOf(parts[1]), "Quebrou");
                             }
                         }
                     });
                 }
+                
+                
                 if (!eventos.isEmpty() && !comandos.isEmpty()) {
                     Thread.sleep(1000);
+                    
                     new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea)).start();
                 } else {
                     //Preenchendo o pódio
@@ -102,6 +109,8 @@ public class CorridaController {
                                 view.setColocacao(podio, "Inexistente");
                             }
                         }
+                        
+                        JOptionPane.showMessageDialog(null, "FIM DA CORRIDA!!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 
                     } catch (CloneNotSupportedException ex) {
                         Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,6 +150,12 @@ public class CorridaController {
 
                 CorridaView.addEvent("APERTE O BOTÃO PARA INICIAR A CORRIDA!!!", view.getEventosTextArea());
                 //CorridaView.fillTextArea(corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida(), view.getEventosTextArea());
+                
+                // Inicializa o Status dos carros com "Normal"
+                int qtdCarro = corridaRegistrada.getCorrida().getRegistrosCarros().getQuantCarros();
+                for(int i = 0 ; i < qtdCarro; i++){
+                    view.getCarsPanel().mudarStatusCarros(Integer.valueOf(i+1), " Normal");
+                }
             }
 
         }

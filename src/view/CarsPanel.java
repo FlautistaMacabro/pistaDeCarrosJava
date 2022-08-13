@@ -63,6 +63,8 @@ public class CarsPanel extends JPanel {
     
     public void moverCarros(int carIndex){
         listaDeCarros.get(carIndex-1).moverCarro();
+        this.revalidate();
+        this.repaint();
     }
     
     
