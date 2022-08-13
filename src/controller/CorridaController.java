@@ -70,7 +70,8 @@ public class CorridaController {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if ("\nNOVA VOLTA".equals(parts[0])) {
+                            //System.out.println("|"+parts[0]+"|");
+                            if ("\nNOVA VOLTA\n".equals(parts[0])) {
                                 System.out.println("NOVA VOLTA");
                             } else if ("AVANÇAR".equals(parts[0])) {
                                 System.out.println("AVANÇAR - " + parts[1]);

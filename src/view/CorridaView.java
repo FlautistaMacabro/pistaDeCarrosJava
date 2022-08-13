@@ -91,6 +91,10 @@ public class CorridaView extends JFrame {
         podio.add(getTerceiroLugar());
         return podio; 
     }
+    
+    public JPanel getCarsPanel(){
+        return container2;
+    }
 
     //--------------- Listeners ---------------//
     public void addEventosJTextAreaListener(HierarchyListener h) {
