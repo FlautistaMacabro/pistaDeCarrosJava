@@ -45,11 +45,13 @@ public class CorridaController {
         private ArrayList<String> eventos;
         private ArrayList<String> comandos;
         private JTextArea eventosArea;
+        private int voltaAtual;
 
-        public UpdateGUIRunnable(ArrayList<? extends String> eventos, ArrayList<? extends String> comandos, JTextArea eventosArea) {
+        public UpdateGUIRunnable(ArrayList<? extends String> eventos, ArrayList<? extends String> comandos, JTextArea eventosArea, int voltaAtual) {
             this.eventos = (ArrayList<String>) eventos;
             this.comandos = (ArrayList<String>) comandos;
             this.eventosArea = eventosArea;
+            this.voltaAtual = voltaAtual;
         }
 
         @Override
@@ -75,14 +77,15 @@ public class CorridaController {
                         public void run() {
                             if("\nNOVA VOLTA\n".equals(parts[0])) {
                                 //System.out.println("NOVA VOLTA");
-                                
+                                view.setVoltaAtual(String.valueOf(voltaAtual));
+                                voltaAtual++;
                             } else if ("AVANÇAR".equals(parts[0])) {
-                                System.out.println("AVANÇAR - " + parts[1]);
+                                //System.out.println("AVANÇAR - " + parts[1]);
                                 view.getCarsPanel().moverCarros(Integer.valueOf(parts[1]));
                             } else if ("ABASTECEU".equals(parts[0])) {
-                                System.out.println("ABASTECEU -" + parts[1]);
+                                //System.out.println("ABASTECEU -" + parts[1]);
                             } else if ("QUEBROU".equals(parts[0])) {
-                                System.out.println("QUEBROU -" + parts[1]);
+                                //System.out.println("QUEBROU -" + parts[1]);
                                 view.getCarsPanel().mudarStatusCarros(Integer.valueOf(parts[1]), "Quebrou");
                             }
                         }
@@ -93,7 +96,7 @@ public class CorridaController {
                 if (!eventos.isEmpty() && !comandos.isEmpty()) {
                     Thread.sleep(1000);
                     
-                    new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea)).start();
+                    new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea, voltaAtual)).start();
                 } else {
                     //Preenchendo o pódio
                     try {
@@ -138,7 +141,9 @@ public class CorridaController {
             ArrayList<String> eventos = corridaRegistrada.getCorrida().getRegistrosVoltas().getEventosGeraisTodaCorrida();
             ArrayList<String> comandos = corridaRegistrada.getCorrida().getRegistrosVoltas().getStatusCarrosTodaCorrida();
 
-            new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea)).start();
+            int voltaAtual = 1;
+            
+            new Thread(new UpdateGUIRunnable(eventos, comandos, eventosArea, voltaAtual)).start();
         }
 
     }

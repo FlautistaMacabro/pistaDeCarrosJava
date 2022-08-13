@@ -63,6 +63,12 @@ public class CorridaView extends JFrame {
     public void setColocacao(JLabel label, String nome) {
         label.setText(label.getText() + nome);
     }
+    
+     public void setVoltaAtual(String str){
+        voltaAtual.setText("Volta atual: "+str);
+        repaint();
+        revalidate();
+    }
 
     //--------------- Getters ---------------// 
     public JTextArea getEventosTextArea() {
@@ -183,14 +189,6 @@ public class CorridaView extends JFrame {
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
 
         add(panel);
-    }
-    
-    
-    
-    public void setVoltaAtual(String str){
-        voltaAtual.setText("Volta: "+str);
-        repaint();
-        revalidate();
     }
 
     //---------------Declaração de Variáveis---------------// 

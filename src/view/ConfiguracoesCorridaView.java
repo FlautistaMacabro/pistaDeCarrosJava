@@ -80,11 +80,11 @@ public class ConfiguracoesCorridaView extends JFrame {
         
         numeroCarrosLabel = new JLabel("Inserir número de carros na corrida (maior que 1 e no máximo 12):");
         numeroCarros = new JTextField();
-        numeroCarros.setToolTipText("2 <= x <= 20");
+        numeroCarros.setToolTipText("2 <= x <= 12");
         
         numeroVoltasLabel = new JLabel("Inserir a quantidade de voltas (maior que 10 e no máximo 25):");
         numeroVoltas = new JTextField();
-        numeroVoltas.setToolTipText("10 < x <= 30");
+        numeroVoltas.setToolTipText("10 < x <= 25 ");
         
         probabilidadeQuebraLabel = new JLabel("Inserir probabilidade de quebra de carros:");
         probabilidadeQuebra = new JTextField();
