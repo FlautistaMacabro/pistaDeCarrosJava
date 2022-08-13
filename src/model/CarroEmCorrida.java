@@ -82,6 +82,10 @@ public class CarroEmCorrida extends Thread{
       int voltaAtual = corridaAtual.getVoltaAtual();
       int voltasPercorridasCarro = carro.getVoltasPercorridas()+1;
       Volta voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-1);
+      String nomeCarro = carro.getNome();
+      int ultimoChar = nomeCarro.length()-1;
+      char decimal = nomeCarro.charAt(ultimoChar-1);
+      String indexCarro;
       if((voltasPercorridasCarro) > voltaAtual){
         registroEventosNaVolta(carro);
         if(voltasPercorridasCarro <= registrosVoltas.getQuantVoltas()){
@@ -90,9 +94,11 @@ public class CarroEmCorrida extends Thread{
           voltaRegistro = registrosVoltas.getListaVoltasClone().get(voltaAtual-2);
         }
       }
-      String nomeCarro = carro.getNome();
       voltaRegistro.addListaEventosGerais("O "+nomeCarro+" COMPLETOU A "+(voltasPercorridasCarro-1)+"º VOLTA!\n");
-      voltaRegistro.addListaStatusCarros("AVANÇAR,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
+      if(Character.isDigit(decimal))
+        indexCarro = ""+decimal+nomeCarro.charAt(ultimoChar);
+      else indexCarro = ""+nomeCarro.charAt(ultimoChar);
+      voltaRegistro.addListaStatusCarros("AVANÇAR,"+indexCarro+",\n");
 //  Mensagem de VOLTA REALIZADA
 //      System.out.println("O "+nomeCarro+" acabou de COMPLETAR UMA VOLTA! Restam "+(getRegistrosVoltas().getQuantVoltas()-carro.getVoltasPercorridas()));
       return true;
@@ -137,12 +143,18 @@ public class CarroEmCorrida extends Thread{
       int voltaAtual = corridaAtual.getVoltaAtual();
       Volta voltaRegistro = corridaAtual.getRegistrosVoltas().getListaVoltasClone().get(voltaAtual-1);
       String nomeCarro = carro.getNome();
+      int ultimoChar = nomeCarro.length()-1;
+      char decimal = nomeCarro.charAt(ultimoChar-1);
+      String indexCarro;
       carro.setColocacao(colocacao);
       if(colocacao > 0 && colocacao < 4)
         voltaRegistro.getListaCarrosNoPodioClone().set(colocacao-1, carro);
       corridaAtual.setPosicaoDisputada(colocacao+1);
       voltaRegistro.addListaEventosGerais("O "+nomeCarro+" CRUZOU A LINHA DE CHEGADA !!!\n");
-      voltaRegistro.addListaStatusCarros("TERMINOU,"+nomeCarro.charAt(nomeCarro.length()-1)+"\n");
+      if(Character.isDigit(decimal))
+        indexCarro = ""+decimal+nomeCarro.charAt(ultimoChar);
+      else indexCarro = ""+nomeCarro.charAt(ultimoChar);
+      voltaRegistro.addListaStatusCarros("TERMINOU,"+indexCarro+"\n");
       acessoAosCarros.removerCarroDaCorrida(carro);
 //      String fraseColocacao = "";
 //      switch(colocacao){
@@ -164,18 +176,30 @@ public class CarroEmCorrida extends Thread{
     Volta voltaRegistro = corridaAtual.getRegistrosVoltas().getListaVoltasClone().get(corridaAtual.getVoltaAtual()-1);
     if(calculaQuebra()){
         String nomeCarro = carro.getNome();
+        int ultimoChar = nomeCarro.length()-1;
+        char decimal = nomeCarro.charAt(ultimoChar-1);
+        String indexCarro;
         carro.setEmFuncionamento(false);
         voltaRegistro.addListaEventosGerais("O "+nomeCarro+" QUEBROU! Infelizmente ele SAIU DA CORRIDA !!\n");
-        voltaRegistro.addListaStatusCarros("QUEBROU,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
+        if(Character.isDigit(decimal))
+          indexCarro = ""+decimal+nomeCarro.charAt(ultimoChar);
+        else indexCarro = ""+nomeCarro.charAt(ultimoChar);
+        voltaRegistro.addListaStatusCarros("QUEBROU,"+indexCarro+",\n");
         corridaAtual.getRegistrosCarros().removerCarroDaCorrida(carro);
 //        System.out.println("Opa, o "+nomeCarro+" acabou de QUEBRAR! Infelizmente ele esta FORA DA CORRIDA !!\n");
     }
     else if(calculaAbastecimento()){
         String nomeCarro = carro.getNome();
+        int ultimoChar = nomeCarro.length()-1;
+        char decimal = nomeCarro.charAt(ultimoChar-1);
+        String indexCarro;
         carro.setComCombustivel(false);
         voltaRegistro.addListaAbastecimentosCarros(carro);
         voltaRegistro.addListaEventosGerais("O "+nomeCarro+" ABASTECEU! Ele teve que esperar o pit stop.\n");
-        voltaRegistro.addListaStatusCarros("ABASTECEU,"+nomeCarro.charAt(nomeCarro.length()-1)+",\n");
+        if(Character.isDigit(decimal))
+          indexCarro = ""+decimal+nomeCarro.charAt(ultimoChar);
+        else indexCarro = ""+nomeCarro.charAt(ultimoChar);
+        voltaRegistro.addListaStatusCarros("ABASTECEU,"+indexCarro+",\n");
 //      System.out.println("Opa, o "+nomeCarro+" precisa ABASTECER! Ele deve que esperar o pit stop.\n");
     }
   }

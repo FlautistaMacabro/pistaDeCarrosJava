@@ -32,7 +32,7 @@ public class RegistrosCarros {
     var listaCarros = getListaDeCarros();
     ArrayList<Integer> listaIds = getIdsPossiveis();
     for (int i = 0; i < quant; i++)
-      listaCarros.add(new Carro(idCarroParaCriacao(),"Carro "+(i+1),getQuantCarros()+1));
+      listaCarros.add(new Carro(idCarroParaCriacao(),"Carro "+(i+1),quant+1));
   }
   
   private void cadastrarIDs(){
