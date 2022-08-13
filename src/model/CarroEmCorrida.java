@@ -44,7 +44,7 @@ public class CarroEmCorrida extends Thread{
   private void largada() throws CloneNotSupportedException, InterruptedException {
     //System.out.println("startou");
     Carro carroBase = getCarroBase();
-    while(carroBase.isEmFuncionamento() && getCorridaAtual().getVoltaAtual() > carroBase.getVoltasPercorridas()){
+    while(carroBase.isEmFuncionamento()){
       //System.out.println("loop");
       if(!carroBase.isComCombustivel()){
         Thread.sleep(10);

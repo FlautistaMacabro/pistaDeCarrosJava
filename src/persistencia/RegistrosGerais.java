@@ -54,6 +54,19 @@ public class RegistrosGerais {
     return listaNomesCarros;
   }
   
+  public ArrayList<Carro> getListaCarrosVencedoresPodio() throws CloneNotSupportedException {
+    ArrayList<Carro> listaCarrosOrdenados = (getCorrida().getRegistrosCarros()).getCarrosOrdenadosColocacao();
+    ArrayList<Carro> listaNomesCarros = new ArrayList<>();
+    Carro inexistente = new Carro(-1, "Inexistente");
+    for(Carro carro : listaCarrosOrdenados)
+      if(carro.isEmFuncionamento())
+        listaNomesCarros.add(carro.clone());
+    int i = listaNomesCarros.size();
+    for (; i < 3; i++)
+      listaNomesCarros.add(inexistente);
+    return (ArrayList<Carro>) listaNomesCarros.subList(0, 3);
+  }
+  
   public ArrayList<String> getListaStringCarrosOrdenadosColocacao() throws CloneNotSupportedException {
     ArrayList<Carro> listaCarrosOrdenados = getListaCarrosOrdenadosColocacao();
     ArrayList<String> listaStatusString = new ArrayList<>();
