@@ -103,7 +103,10 @@ public class CorridaController {
                         ArrayList<Carro> carros = corridaRegistrada.getListaCarrosVencedoresOrdenadosColocacao();
                         ArrayList vencedores = view.getPodio();
 
+                        int pos = 0;
                         for (Carro carro : carros) {
+                            if(pos == 3) break;
+                                
                             JLabel podio = (JLabel) vencedores.remove(0);
                             podio.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -112,6 +115,7 @@ public class CorridaController {
                             } else {
                                 view.setColocacao(podio, "Inexistente");
                             }
+                            pos++;
                         }
                         
                         JOptionPane.showMessageDialog(null, "FIM DA CORRIDA!!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
