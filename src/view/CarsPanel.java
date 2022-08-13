@@ -8,6 +8,7 @@ package view;
  *
  * @author mathe
  */
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
-
 
 public class CarsPanel extends JPanel {
 
@@ -48,10 +48,10 @@ public class CarsPanel extends JPanel {
         }
 
         this.vencedores = new ArrayList<>();
+        setMaximumSize(new Dimension(3000,600));
     }
-    
+
     //--------------- Métodos ---------------// 
-    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -59,23 +59,20 @@ public class CarsPanel extends JPanel {
             display.paintDisplay(g);
         }
     }
-    
-    
-    public void moverCarros(int carIndex){
-        listaDeCarros.get(carIndex-1).moverCarro();
+
+    public void moverCarros(int carIndex) {
+        listaDeCarros.get(carIndex - 1).moverCarro();
         this.revalidate();
         this.repaint();
     }
-    
-    
-     public void mudarStatusCarros(int carIndex, String statusMessage){
-        listaDeCarros.get(carIndex-1).setStatusCarro(statusMessage);
+
+    public void mudarStatusCarros(int carIndex, String statusMessage) {
+        listaDeCarros.get(carIndex - 1).setStatusCarro(statusMessage);
     }
-    
-    
-     //--------------- Getters ---------------// 
+
+    //--------------- Getters ---------------// 
     public ArrayList<CarsDisplay> getListaDeCarros() {
         return listaDeCarros;
     }
-    
+
 }
