@@ -5,6 +5,7 @@
 package view;
 
 import controller.CorridaController;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -119,11 +120,13 @@ public class CorridaView extends JFrame {
         container3 = new JPanel();
         container4 = new JPanel();
         eventosLabel = new JLabel("Eventos");
+        tituloCorrida = new JLabel("Corrida");
         statusCarrosLabel = new JLabel("Status dos Carros");
         podioLabel = new JLabel("Pódio");
         primeiroLugar = new JLabel("Primeiro Lugar: ");
         segundoLugar = new JLabel("Segundo Lugar: ");
         terceiroLugar = new JLabel("Terceiro Lugar: ");
+        voltaAtual =  new JLabel("Volta atual: 0");
         eventosTextArea = new JTextArea();
         statusTextArea = new JTextArea();
 
@@ -132,10 +135,11 @@ public class CorridaView extends JFrame {
 
         scrollEventosTextArea = new JScrollPane(eventosTextArea);
         scrollStatusTextArea = new JScrollPane(statusTextArea);
+        
 
         //Configurações da Janela/Frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+      //  setResizable(false);
         setSize(1500, 800);
         setLocationRelativeTo(null);
 
@@ -150,6 +154,7 @@ public class CorridaView extends JFrame {
 
         //Outros componentes
         eventosLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        tituloCorrida.setFont(new Font("Arial", Font.BOLD, 14));
         statusCarrosLabel.setFont(new Font("Arial", Font.BOLD, 14));
         podioLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
@@ -160,11 +165,13 @@ public class CorridaView extends JFrame {
         container1.add(scrollEventosTextArea);
         container1.add(Box.createRigidArea(new Dimension(0, 40)));
         button = new JButton("Iniciar Corrida");
-        container2 = new CarsPanel(numberOfCars,numberOfLaps, 50, 100, button);
-
+        container2 = new CarsPanel(numberOfCars,numberOfLaps, 50, 25, button);
+        scrollCorrida =  new JScrollPane(container2);
         panel.add(Box.createRigidArea(new Dimension(10, 0)));
         container1.add(button);
         panel.add(container1);
+        container4.add(tituloCorrida);
+        container4.add(voltaAtual);
         container4.add(container2);
 
         container3.add(podioLabel);
@@ -177,6 +184,14 @@ public class CorridaView extends JFrame {
 
         add(panel);
     }
+    
+    
+    
+    public void setVoltaAtual(String str){
+        voltaAtual.setText("Volta: "+str);
+        repaint();
+        revalidate();
+    }
 
     //---------------Declaração de Variáveis---------------// 
     private JPanel panel;
@@ -184,12 +199,15 @@ public class CorridaView extends JFrame {
     private CarsPanel container2;
     private JPanel container3;
     private JPanel container4;
+    private JLabel tituloCorrida;
+    private JLabel voltaAtual;
     private JLabel eventosLabel;
     private JLabel statusCarrosLabel;
     private JLabel podioLabel;
     private JTextArea eventosTextArea;
     private JScrollPane scrollEventosTextArea;
     private JScrollPane scrollStatusTextArea;
+    private JScrollPane scrollCorrida;
     private JTextArea statusTextArea;
     private JLabel primeiroLugar;
     private JLabel segundoLugar;
