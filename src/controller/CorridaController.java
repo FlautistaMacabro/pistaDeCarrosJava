@@ -73,15 +73,16 @@ public class CorridaController {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if ("\nNOVA VOLTA\n".equals(parts[0])) {
+                            if("\nNOVA VOLTA\n".equals(parts[0])) {
                                 //System.out.println("NOVA VOLTA");
+                                
                             } else if ("AVANÇAR".equals(parts[0])) {
-                                //System.out.println("AVANÇAR - " + parts[1]);
+                                System.out.println("AVANÇAR - " + parts[1]);
                                 view.getCarsPanel().moverCarros(Integer.valueOf(parts[1]));
                             } else if ("ABASTECEU".equals(parts[0])) {
-                                //System.out.println("ABASTECEU -" + parts[1]);
+                                System.out.println("ABASTECEU -" + parts[1]);
                             } else if ("QUEBROU".equals(parts[0])) {
-                                //System.out.println("QUEBROU -" + parts[1]);
+                                System.out.println("QUEBROU -" + parts[1]);
                                 view.getCarsPanel().mudarStatusCarros(Integer.valueOf(parts[1]), "Quebrou");
                             }
                         }
@@ -111,6 +112,7 @@ public class CorridaController {
                         }
                         
                         JOptionPane.showMessageDialog(null, "FIM DA CORRIDA!!!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("A corrida terminou...");
 
                     } catch (CloneNotSupportedException ex) {
                         Logger.getLogger(CorridaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,6 +130,8 @@ public class CorridaController {
         public void actionPerformed(ActionEvent e) {
 
             System.out.println("Iniciando a corrida...");
+            
+            view.getButton().setEnabled(false);
 
             JTextArea eventosArea = view.getEventosTextArea();
 

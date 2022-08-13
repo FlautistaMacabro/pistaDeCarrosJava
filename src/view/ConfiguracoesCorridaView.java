@@ -78,11 +78,11 @@ public class ConfiguracoesCorridaView extends JFrame {
         
         titulo = new JLabel("Configurações da Corrida");
         
-        numeroCarrosLabel = new JLabel("Inserir número de carros na corrida (maior que 1 e no máximo 20):");
+        numeroCarrosLabel = new JLabel("Inserir número de carros na corrida (maior que 1 e no máximo 12):");
         numeroCarros = new JTextField();
         numeroCarros.setToolTipText("2 <= x <= 20");
         
-        numeroVoltasLabel = new JLabel("Inserir a quantidade de voltas (maior que 10 e no máximo 30):");
+        numeroVoltasLabel = new JLabel("Inserir a quantidade de voltas (maior que 10 e no máximo 25):");
         numeroVoltas = new JTextField();
         numeroVoltas.setToolTipText("10 < x <= 30");
         

@@ -135,7 +135,7 @@ public class ConfiguracoesCorridaController {
             }
             
             
-            if ((numCarros < 2 || numCarros > 20) || (numVoltas < 11 || numVoltas > 30) || (probaQuebrar < 0 || probaQuebrar > 100) || (probaAbastecimento < 0 || probaAbastecimento > 100)) {
+            if ((numCarros < 2 || numCarros > 12) || (numVoltas < 11 || numVoltas > 25) || (probaQuebrar < 0 || probaQuebrar > 100) || (probaAbastecimento < 0 || probaAbastecimento > 100)) {
                 JOptionPane.showMessageDialog(null, "Erro! Os valores inseridos nos campos estão incorretos.", "Error", 0);
             } 
             else {

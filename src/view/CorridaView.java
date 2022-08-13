@@ -84,6 +84,10 @@ public class CorridaView extends JFrame {
         return terceiroLugar;
     }
     
+    public JButton getButton(){
+        return button;
+    }
+    
     public ArrayList getPodio(){
         ArrayList podio = new ArrayList();
         podio.add(getPrimeiroLugar());
